@@ -80,30 +80,3 @@ CREATE TABLE IF NOT EXISTS `srr_char_warrants` (
   `officer_Username` varchar(255) NOT NULL,
   `warrant` varchar(255) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
-
---
--- AUTO_INCREMENT för tabell `chars`
---
-ALTER TABLE `chars`
-MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=70;
---
--- AUTO_INCREMENT för tabell `srradmin`
---
-
-ALTER TABLE `srr_char_bolos`
-MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT för tabell `srr_char_charges`
---
-ALTER TABLE `srr_char_charges`
-MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=37;
---
--- AUTO_INCREMENT för tabell `srr_char_inv`
---
-ALTER TABLE `srr_char_plate`
-MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=83;
---
--- AUTO_INCREMENT för tabell `srr_char_warrants`
---
-ALTER TABLE `srr_char_warrants`
-MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
