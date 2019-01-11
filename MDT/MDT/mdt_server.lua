@@ -363,19 +363,6 @@ function MDT_SQL_ADD_TICKET(source, player, points, bank, violation)
 	MySQL.Async.fetchAll("UPDATE chars SET license_p = license_p + @POINTS WHERE STEAMID = @STEAMID", {["@STEAMID"] = player_steamID, ["@POINTS"] = points}, function()
 		TriggerClientEvent("SRR_CHAR:s_Notify", source, "" .. mdt.Server_Color .. "MDT~w~: You gave a ticket to: "..GetPlayerName(player).." that gave "..points.." points")
 		--
-		 MySQL.Async.fetchAll("SELECT * FROM srrcore WHERE STEAMID = @STEAMID", {["@STEAMID"] = player_steamID}, function(CurrentBalance)
-			if (#CurrentBalance >= 1) then
-				for i = 1, #CurrentBalance, 1 do					
-					bank_value = CurrentBalance[i].BANK
-					local SQL = 'UPDATE srrcore SET BANK = @MONEY WHERE STEAMID = @ID'
-					local PARAM = {ID = player_steamID, MONEY = bank_value - bank}
-					MySQL.Async.execute(SQL,PARAM)
-				end
-			elseif (#CurrentBalance == 0 ) then
-				--
-			end
-		end);
-		--
 		TriggerClientEvent("SRR_CHAR:s_Notify", player, "" .. mdt.Server_Color .. "You was given a ticket by an officer that gave you "..points.." points on your driver's license")
 		TriggerClientEvent("SRR_CHAR:s_Notify", player, "" .. mdt.Server_Color .. "Traffic/Vehicle Violation: ~n~~w~"..violation)
 		TriggerClientEvent("SRR_CHAR:s_Notify", player, "" .. mdt.Server_Color .. "Cost Of Ticket~w~: "..bank.." $")
@@ -388,31 +375,13 @@ AddEventHandler("MDT_SQL_RESET_D_POINTS", function(VALUE)
 	local source_steamID = GetSteamID(source)
 	local PLAYER = source
 	
-	 MySQL.Async.fetchAll("SELECT * FROM srrcore WHERE STEAMID = @STEAMID", {["@STEAMID"] = source_steamID}, function(CurrentBalance)
-		if (#CurrentBalance >= 1) then
-			for i = 1, #CurrentBalance, 1 do					
-				bank_value = CurrentBalance[i].BANK
-				if bank_value >= VALUE then
-					--
-					MySQL.Async.fetchAll("SELECT * FROM srr_char_warrants WHERE STEAMID = @STEAMID ORDER BY `ts` DESC LIMIT 20", {["@STEAMID"] = source_steamID}, function(warrant)
-						if (#warrant == 0) then
-							MDT_SQL_RESET_D_POINTS_END(PLAYER)
-							TriggerClientEvent("SRR_CHAR:s_Notify", PLAYER, "" .. mdt.Server_Color .. "Your license points was successfully reseted by the court house")
-							--
-							local SQL = 'UPDATE srrcore SET BANK = @MONEY WHERE STEAMID = @ID'
-							local PARAM = {ID = source_steamID, MONEY = bank_value - VALUE}
-							MySQL.Async.execute(SQL,PARAM)
-					elseif (#warrant >= 0) then
-							TriggerClientEvent("SRR_CHAR:s_Notify", PLAYER, "~r~You cannot reset your license points while you have active warrant(s)")
-						end
-					end);
-					--
-				else
-					TriggerClientEvent("SRR_CHAR:s_Notify", USER, "~g~Money~w~: Not enough money in bank account, Could not process the CDL course")
-				end
-			end
-		elseif (#CurrentBalance == 0 ) then
-			--
+		--
+	MySQL.Async.fetchAll("SELECT * FROM srr_char_warrants WHERE STEAMID = @STEAMID ORDER BY `ts` DESC LIMIT 20", {["@STEAMID"] = source_steamID}, function(warrant)
+		if (#warrant == 0) then
+			MDT_SQL_RESET_D_POINTS_END(PLAYER)
+			TriggerClientEvent("SRR_CHAR:s_Notify", PLAYER, "" .. mdt.Server_Color .. "Your license points was successfully reseted by the court house")
+		elseif (#warrant >= 0) then
+			TriggerClientEvent("SRR_CHAR:s_Notify", PLAYER, "~r~You cannot reset your license points while you have active warrant(s)")
 		end
     end);
 end)
