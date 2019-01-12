@@ -29,7 +29,7 @@ RegisterCommand("mdt", function(source, args, rawCommand)
 	--
 	if args[1] == nil then
 		TriggerClientEvent("SRR_CHAR:MDT_CLOSE_ARRAY", source)
-		TriggerClientEvent("SRR_CHAR:HomePage_MDT", source, mdt.Server_Color .. mdt.Server_Name .. " ~w~| MOBILE DATA TERMINAL", "~c~This Mobile Device is owned by the San Andreas Goverment 2018 & 2019 - CC("..mdt.Server_Color..")", "", "" .. mdt.Server_Color .. "ISSUES & BUGS:", "~c~For any issues or/and bugs with the MDT system, report in our discord.", "", "" .. mdt.Server_Color .. "MDT COMMANDS & CONTROLS:", "~c~All the following commands are to be used after /mdt", "~w~warcheck (ID), chacheck (ID), placheck (PLATE), bolcheck, idcheck (ID)", "~w~addwar (ID) (WARRENT), addcha (ID) (CHARGE), flag stolen (PLATE) (0/1), addbolo (BOLO)", "~w~clearwar (ID) (WARRENT), clearcha (ID) (CHARGE), delplate (PLATE), clearbol", "", "" .. mdt.Server_Color .. "STATUS & PERSONAL MDT INFO:", "~c~Your status and personal info and/or notes. [/mdt addnote (NOTE)] to add a note.", "~w~PERSONAL NOTE: ~c~", "~w~MDT VERSION: ~c~", "~w~MDT NETWORK STATUS: ~g~")
+		TriggerClientEvent("SRR_CHAR:HomePage_MDT", source, mdt.Server_Color .. mdt.Server_Name .. " ~w~| MOBILE DATA TERMINAL", "~c~This Mobile Device is owned by the San Andreas Goverment 2018 & 2019 - CC("..mdt.Server_Name..")", "", "" .. mdt.Server_Color .. "ISSUES & BUGS:", "~c~For any issues or/and bugs with the MDT system, report in our discord.", "", "" .. mdt.Server_Color .. "MDT COMMANDS & CONTROLS:", "~c~All the following commands are to be used after /mdt", "~w~warcheck (ID), chacheck (ID), placheck (PLATE), bolcheck, idcheck (ID)", "~w~addwar (ID) (WARRENT), addcha (ID) (CHARGE), flag stolen (PLATE) (0/1), addbolo (BOLO)", "~w~clearwar (ID) (WARRENT), clearcha (ID) (CHARGE), delplate (PLATE), clearbol", "", "" .. mdt.Server_Color .. "STATUS & PERSONAL MDT INFO:", "~c~Your status and personal info and/or notes. [/mdt addnote (NOTE)] to add a note.", "~w~PERSONAL NOTE: ~c~", "~w~MDT VERSION: ~c~", "~w~MDT NETWORK STATUS: ~g~")
 	end
 	--
 	-- (MAIN PART)
@@ -138,23 +138,6 @@ RegisterCommand("mdt", function(source, args, rawCommand)
 		TriggerClientEvent("MDT_SKIP_EVENT:PLATE_DEL", PLAYER, args[2]) --
 	end
 	--
-end, false)
-
--- Give ticket command
-RegisterCommand("gticket", function(source, args, rawCommand)
-	local PLAYER = source
-	local STEAMID = GetSteamID(PLAYER)
-	--
-	local str = "";
-				for i = 4, #args do
-					if (str == "") then
-						str = args[i];
-					else
-						str = str .. " " .. args[i];
-					end
-				end
-	--
-	MDT_SQL_ADD_TICKET(PLAYER, args[1], args[2], args[3], str)
 end, false)
 
 -- Register Vehicle Part
@@ -355,33 +338,37 @@ AddEventHandler('MDT_SKIP_EVENT:ID_CHECK_2', function(player)
 	end);
 end)
 
--- Give a ticket with points
-function MDT_SQL_ADD_TICKET(source, player, points, bank, violation)
-	local source_steamID = GetSteamID(source)
-	local player_steamID = GetSteamID(player)
-	--
-	MySQL.Async.fetchAll("UPDATE chars SET license_p = license_p + @POINTS WHERE STEAMID = @STEAMID", {["@STEAMID"] = player_steamID, ["@POINTS"] = points}, function()
-		TriggerClientEvent("SRR_CHAR:s_Notify", source, "" .. mdt.Server_Color .. "MDT~w~: You gave a ticket to: "..GetPlayerName(player).." that gave "..points.." points")
-		--
-		TriggerClientEvent("SRR_CHAR:s_Notify", player, "" .. mdt.Server_Color .. "You was given a ticket by an officer that gave you "..points.." points on your driver's license")
-		TriggerClientEvent("SRR_CHAR:s_Notify", player, "" .. mdt.Server_Color .. "Traffic/Vehicle Violation: ~n~~w~"..violation)
-		TriggerClientEvent("SRR_CHAR:s_Notify", player, "" .. mdt.Server_Color .. "Cost Of Ticket~w~: "..bank.." $")
-	end);
-end
-
 -- Reset license points SQL-function (check if player has any warrent(s) first)
 RegisterServerEvent("MDT_SQL_RESET_D_POINTS")
 AddEventHandler("MDT_SQL_RESET_D_POINTS", function(VALUE)
 	local source_steamID = GetSteamID(source)
 	local PLAYER = source
 	
-		--
-	MySQL.Async.fetchAll("SELECT * FROM srr_char_warrants WHERE STEAMID = @STEAMID ORDER BY `ts` DESC LIMIT 20", {["@STEAMID"] = source_steamID}, function(warrant)
-		if (#warrant == 0) then
-			MDT_SQL_RESET_D_POINTS_END(PLAYER)
-			TriggerClientEvent("SRR_CHAR:s_Notify", PLAYER, "" .. mdt.Server_Color .. "Your license points was successfully reseted by the court house")
-		elseif (#warrant >= 0) then
-			TriggerClientEvent("SRR_CHAR:s_Notify", PLAYER, "~r~You cannot reset your license points while you have active warrant(s)")
+	 MySQL.Async.fetchAll("SELECT * FROM srrcore WHERE STEAMID = @STEAMID", {["@STEAMID"] = source_steamID}, function(CurrentBalance)
+		if (#CurrentBalance >= 1) then
+			for i = 1, #CurrentBalance, 1 do					
+				bank_value = CurrentBalance[i].BANK
+				if bank_value >= VALUE then
+					--
+					MySQL.Async.fetchAll("SELECT * FROM srr_char_warrants WHERE STEAMID = @STEAMID ORDER BY `ts` DESC LIMIT 20", {["@STEAMID"] = source_steamID}, function(warrant)
+						if (#warrant == 0) then
+							MDT_SQL_RESET_D_POINTS_END(PLAYER)
+							TriggerClientEvent("SRR_CHAR:s_Notify", PLAYER, "" .. mdt.Server_Color .. "Your license points was successfully reseted by the court house")
+							--
+							local SQL = 'UPDATE srrcore SET BANK = @MONEY WHERE STEAMID = @ID'
+							local PARAM = {ID = source_steamID, MONEY = bank_value - VALUE}
+							MySQL.Async.execute(SQL,PARAM)
+					elseif (#warrant >= 0) then
+							TriggerClientEvent("SRR_CHAR:s_Notify", PLAYER, "~r~You cannot reset your license points while you have active warrant(s)")
+						end
+					end);
+					--
+				else
+					TriggerClientEvent("SRR_CHAR:s_Notify", USER, "~g~Money~w~: Not enough money in bank account, Could not process the CDL course")
+				end
+			end
+		elseif (#CurrentBalance == 0 ) then
+			--
 		end
     end);
 end)

@@ -53,8 +53,8 @@ RegisterCommand("character", function(source, args, rawCommand)
 	if args[1] == nil then
 		SRR_CHAR_INFO(PLAYER, STEAMID)
 	elseif args[1] == "create" then
-		if args[5] == nil then
-			print("error")
+		if args[5] == nil or args[6] then
+			TriggerClientEvent('chatMessage', PLAYER, "^1[CMD_INP_ERR] Wrong syntax for command", {255, 255, 255})
 		elseif not nil then
 			SRR_CHAR_RESET(PLAYER, STEAMID)
 			Citizen.Wait(1) 
@@ -78,10 +78,6 @@ function SRR_CHAR_CREATE(USER, ID, FIRSTNAME, LASTNAME, DOB, GENDER)
 	-- CHARACTER SYSTEM INSERT
     local SQL = 'INSERT IGNORE INTO chars (STEAMID, USERNAME, FIRSTNAME, LASTNAME, DOB, GENDER) VALUES (@STEAMID, @NAME, @FIRSTNAME, @LASTNAME, @DOB, @GENDER)'
     local SQLParam = {STEAMID = ID, NAME = Username, FIRSTNAME = FIRSTNAME, LASTNAME = LASTNAME, DOB = DOB, GENDER = GENDER}
-    MySQL.Async.execute(SQL, SQLParam)
-	-- INVENTORY SYSTEM INSERT
-	local SQL = 'INSERT IGNORE INTO srr_char_inv (STEAMID, USERNAME) VALUES (@STEAMID, @NAME)'
-    local SQLParam = {STEAMID = ID, NAME = Username}
     MySQL.Async.execute(SQL, SQLParam)
 end
 
@@ -144,10 +140,6 @@ function SRR_CHAR_RESET(USER, ID)
 	
 	-- CHARACTER SYSTEM DELETE
     local SQL = "DELETE FROM chars WHERE STEAMID = @STEAMID"
-    local param = {STEAMID = ID}
-    MySQL.Async.execute(SQL, param)
-	-- INVENTORY SYSTEM DELETE
-	local SQL = "DELETE FROM srr_char_inv WHERE STEAMID = @STEAMID"
     local param = {STEAMID = ID}
     MySQL.Async.execute(SQL, param)
 	--
