@@ -256,6 +256,7 @@ Citizen.CreateThread(function()
 					drawTxt(1.043, 0.905, 1.0,1.0,0.48, "~w~Driver's License Points: ~r~15 (suspended)", 255, 255, 255, 200)
 				else
 					drawTxt(1.043, 0.905, 1.0,1.0,0.48, "~w~Driver's License Points: ~c~"..mdt_id[i].license_p, 255, 255, 255, 200)
+				end
 				if (i == #mdt_id) then
 					drawTxt(1.192, 1.245, 1.0,1.0,0.45, "~c~P R E S S  ~c~D E L  ~c~T O  C L O S E", 255, 255, 255, 200);
 				end
