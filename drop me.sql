@@ -90,29 +90,29 @@ CREATE TABLE IF NOT EXISTS `srr_char_warrants` (
 --
 -- Index för tabell `chars`
 --
-ALTER TABLE `chars`
- ADD PRIMARY KEY (`ID`);
+-- ALTER TABLE `chars`
+ -- ADD PRIMARY KEY (`ID`);
 
 --
 -- Index för tabell `srr_char_bolos`
 --
-ALTER TABLE `srr_char_bolos`
- ADD PRIMARY KEY (`ID`);
+--ALTER TABLE `srr_char_bolos`
+ --ADD PRIMARY KEY (`ID`);
 
 --
 -- Index för tabell `srr_char_charges`
 --
-ALTER TABLE `srr_char_charges`
- ADD PRIMARY KEY (`ID`);
+--ALTER TABLE `srr_char_charges`
+ --ADD PRIMARY KEY (`ID`);
 
 --
 -- Index för tabell `srr_char_plate`
 --
-ALTER TABLE `srr_char_plate`
- ADD PRIMARY KEY (`ID`);
+--ALTER TABLE `srr_char_plate`
+ --ADD PRIMARY KEY (`ID`);
 
 --
 -- Index för tabell `srr_char_warrants`
 --
-ALTER TABLE `srr_char_warrants`
- ADD PRIMARY KEY (`ID`);
+--ALTER TABLE `srr_char_warrants`
+ --ADD PRIMARY KEY (`ID`);
