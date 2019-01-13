@@ -23,7 +23,7 @@ mdt = {
 	-- */* WHEN LEAVING SERVER SHOULD IT CLEAR YOUR REGISTERED VEHICLES */*
 	Server_Del_Veh = true, -- (Valid Options: true or false)
 	-- */* IF LICENSES ARE TO BE INGAME AND USED (FIREARM, DMV, CDL) */*
-	Server_Licenses = false, -- (Valid Options: true or false)
+	Server_Licenses = true, -- (Valid Options: true or false)
 	-- */* MAX POINTS OFFICERS CAN GIVE */*
 	Server_Points = "3", -- ([Default: 3] - Max points officers can give to a person)
 	-- */* WHEN PUTTING OUT WARRANT SHOW AN NOTICE TO THE PLAYER */*
