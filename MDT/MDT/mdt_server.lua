@@ -1,6 +1,5 @@
 ----------------------------------------------
----- */* STATEWIDE REALISTIC ROLEPLAY */* ----
-----   STATEWIDERR.NET / AUTHOR: ALPHA    ----
+----    ---   / AUTHOR: ALPHA \   ----	  ----
 ----------------------------------------------
 
 -- Alpha Email: clatani123123@gmail.com
@@ -29,13 +28,16 @@ RegisterCommand("mdt", function(source, args, rawCommand)
 	--
 	if args[1] == nil then
 		TriggerClientEvent("SRR_CHAR:MDT_CLOSE_ARRAY", source)
-		TriggerClientEvent("SRR_CHAR:HomePage_MDT", source, mdt.Server_Color .. mdt.Server_Name .. " ~w~| MOBILE DATA TERMINAL", "~c~This Mobile Device is owned by the San Andreas Goverment 2018 & 2019 - CC("..mdt.Server_Name..")", "", "" .. mdt.Server_Color .. "ISSUES & BUGS:", "~c~For any issues or/and bugs with the MDT system, report in our discord.", "", "" .. mdt.Server_Color .. "MDT COMMANDS & CONTROLS:", "~c~All the following commands are to be used after /mdt", "~w~warcheck (ID), chacheck (ID), placheck (PLATE), bolcheck, idcheck (ID)", "~w~addwar (ID) (WARRENT), addcha (ID) (CHARGE), flag stolen (PLATE) (0/1), addbolo (BOLO)", "~w~clearwar (ID) (WARRENT), clearcha (ID) (CHARGE), delplate (PLATE), clearbol", "", "" .. mdt.Server_Color .. "STATUS & PERSONAL MDT INFO:", "~c~Your status and personal info and/or notes. [/mdt addnote (NOTE)] to add a note.", "~w~PERSONAL NOTE: ~c~", "~w~MDT VERSION: ~c~", "~w~MDT NETWORK STATUS: ~g~")
+		TriggerClientEvent("SRR_CHAR:HomePage_MDT", source, mdt.Server_Color .. mdt.Server_Name .. " ~w~| MOBILE DATA TERMINAL", "~c~This Mobile Device is owned by the San Andreas Goverment 2018 & 2019 - CC("..mdt.Server_Name..")", "", "" .. mdt.Server_Color .. "ISSUES & BUGS:", "~c~For any issues or/and bugs with the MDT system, report in our discord.", "", "" .. mdt.Server_Color .. "MDT COMMANDS & CONTROLS:", "~c~All the following commands are to be used after /mdt", "~w~warcheck (ID), chacheck (ID), placheck (PLATE), bolcheck, idcheck (ID), addp (ID) (POINTS)", "~w~addwar (ID) (WARRENT), addcha (ID) (CHARGE), flag stolen (PLATE) (0/1), addbolo (BOLO)", "~w~clearwar (ID) (WARRENT), clearcha (ID) (CHARGE), delplate (PLATE), clearbol", "", "" .. mdt.Server_Color .. "STATUS & PERSONAL MDT INFO:", "~c~Your status and personal info and/or notes. [/mdt addnote (NOTE)] to add a note.", "~w~PERSONAL NOTE: ~c~", "~w~MDT VERSION: ~c~", "~w~MDT NETWORK STATUS: ~g~")
 	end
 	--
 	-- (MAIN PART)
 	--
-	if args[1] == "addnote" and args[2] then
-		local str = "";
+	if args[1] == "addnote" then
+		if args[2] == nil then
+			TriggerClientEvent('chatMessage', PLAYER, "^1[CMD_INP_ERR] Wrong syntax for command", {255, 255, 255})
+		else
+			local str = "";
 				for i = 2, #args do
 					if (str == "") then
 						str = args[i];
@@ -43,7 +45,18 @@ RegisterCommand("mdt", function(source, args, rawCommand)
 						str = str .. " " .. args[i];
 					end
 				end
-		TriggerClientEvent("SRR_CHAR:NOTE_MDT", PLAYER, str)
+			TriggerClientEvent("SRR_CHAR:NOTE_MDT", PLAYER, str)
+		end
+	end
+	--
+	-- (LICENSE POINTS PART)
+	--
+	if args[1] == "addp" then
+		if args[3] > mdt.Server_Points then
+			TriggerClientEvent('chatMessage', PLAYER, "^1[CMD_INP_ERR] Exceeded max value for [Points] - [Max: "..mdt.Server_Points.."]", {255, 255, 255})
+		else
+			TriggerClientEvent("MDT_SKIP_EVENT:POINT_ADD", PLAYER, args[2], args[3])
+		end
 	end
 	--
 	-- (BOLO PART)
@@ -164,11 +177,62 @@ RegisterCommand('veh', function(source, args, rawCommand)
 	end
 end, false)
 
+-- Flash ID Part
+RegisterCommand('flashid', function(source, args, rawCommand)
+	local PLAYER = source
+	local STEAMID = GetSteamID(PLAYER)
+	
+	MySQL.Async.fetchAll("SELECT * FROM chars WHERE STEAMID = @STEAMID", {["@STEAMID"] = STEAMID}, function(CharacterInfo)
+		if (#CharacterInfo >= 1) then
+			for i = 1, #CharacterInfo, 1 do
+				firstname = CharacterInfo[i].Firstname
+				lastname = CharacterInfo[i].Lastname
+				dob = CharacterInfo[i].DOB
+				gender = CharacterInfo[i].Gender
+				driverlicense = CharacterInfo[i].d_license
+				commercialdriverlicense = CharacterInfo[i].cd_license
+				driverlicensepoints = CharacterInfo[i].license_p
+				boatinglicense = CharacterInfo[i].b_license
+				firearmlicense = CharacterInfo[i].f_license
+				--
+				TriggerClientEvent("sendProximityMessage25Command", PLAYER, "^3"..GetPlayerName(PLAYER).." flashes ID (Name: "..firstname.." "..lastname..", DOB: "..dob..", Driver's License: "..tostring(driverlicense)..", C-Driver's License: "..tostring(commercialdriverlicense)..", Firearm License: "..tostring(firearmlicense)..")")
+			end
+		elseif (#CharacterInfo == 0) then
+			TriggerClientEvent('chatMessage', PLAYER, "^1[CMD_LOD_ERR] Character not found", {255, 255, 255})
+		end
+	end);
+end)
+
 --------------------------------
 --- */* SCRIPT FUNCTIONS */* ---
 --------------------------------
 
 -- */* SQL PART */* --
+
+--------------------------
+-- */* MDT - POINTS */* --
+--------------------------
+
+-- Add bolo to MDT-System
+RegisterServerEvent("MDT_SKIP_EVENT:POINT_ADD_2")
+AddEventHandler('MDT_SKIP_EVENT:POINT_ADD_2', function(player, points)
+	local steamID = GetSteamID(source)
+	local p_steamID = GetSteamID(player)
+	local PLAYER = source
+	--
+	MySQL.Async.fetchAll("SELECT * FROM chars WHERE STEAMID = @STEAMID", {["@STEAMID"] = p_steamID}, function(CharacterInfo)
+		if (#CharacterInfo >= 1) then
+			for i = 1, #CharacterInfo, 1 do
+				local driverlicensepoints = CharacterInfo[i].license_p
+				local add_p = driverlicensepoints + points
+				--
+				MySQL.Async.execute("UPDATE chars SET license_p=@LICENSEP WHERE STEAMID = @STEAMID", {["@STEAMID"] = p_steamID, ['@LICENSEP'] = add_p})
+				--
+				TriggerClientEvent("SRR_CHAR:s_Notify", PLAYER, "" .. mdt.Server_Color .. "MDT~w~: You gave "..GetPlayerName(player).." "..points.." points")
+			end
+		end
+	end);
+end)
 
 -------------------------
 -- */* MDT - BOLOS */* --
@@ -226,9 +290,27 @@ AddEventHandler('MDT_SKIP_EVENT:WAR_ADD_2', function(player, warrant)
 	local player_steamID = GetSteamID(player)
 	local PLAYER = source
 	--
-	MySQL.Async.execute("INSERT INTO srr_char_warrants (`ts`, `STEAMID`, `Username`, `officer_STEAMID`, `officer_Username`, `warrant`) VALUES (NOW(), @STEAMID, @Username, @officer_STEAMID, @officer_Username, @warrant);",
-		{["@STEAMID"] = player_steamID, ["@Username"] = GetPlayerName(player), ["@officer_STEAMID"] = source_steamID, ['@officer_Username'] = GetPlayerName(source), ['@warrant'] = warrant}, function()
+	MySQL.Async.execute("INSERT INTO srr_char_warrants (`ts`, `STEAMID`, `Username`, `officer_STEAMID`, `officer_Username`, `warrant_a`) VALUES (NOW(), @STEAMID, @Username, @officer_STEAMID, @officer_Username, @warrant_a);",
+		{["@STEAMID"] = player_steamID, ["@Username"] = GetPlayerName(player), ["@officer_STEAMID"] = source_steamID, ['@officer_Username'] = GetPlayerName(source), ['@warrant_a'] = warrant}, function()
 		TriggerClientEvent("SRR_CHAR:s_Notify", PLAYER, "" .. mdt.Server_Color .. "MDT~w~: Warrant was put out successfully")
+	end);
+end)
+
+-- Add warrant to MDT-System
+RegisterServerEvent("MDT_SKIP_EVENT:WAR_ADD_2")
+AddEventHandler('MDT_SKIP_EVENT:WAR_ADD_2', function(player, charge)
+	local source_steamID = GetSteamID(source)
+	local player_steamID = GetSteamID(player)
+	local PLAYER_ = source
+	--
+	MySQL.Async.execute("INSERT INTO srr_char_warrants (`ts`, `STEAMID`, `Username`, `officer_STEAMID`, `officer_Username`, `warrant`) VALUES (NOW(), @STEAMID, @Username, @officer_STEAMID, @officer_Username, @charge);",
+		{["@STEAMID"] = player_steamID, ["@Username"] = GetPlayerName(player), ["@officer_STEAMID"] = source_steamID, ['@officer_Username'] = GetPlayerName(source), ['@charge'] = charge}, function()
+		TriggerClientEvent("SRR_CHAR:s_Notify", PLAYER_, "" .. mdt.Server_Color .. "MDT~w~: Warrant was added successfully")
+		--
+		if mdt.Server_Show_War == true then
+			TriggerClientEvent("SRR_CHAR:s_Notify", player, "~r~ACTIVE ARREST WARRANT~w~:")
+			TriggerClientEvent("SRR_CHAR:s_Notify", player, "~c~"..charge)
+		end
 	end);
 end)
 
@@ -344,31 +426,16 @@ AddEventHandler("MDT_SQL_RESET_D_POINTS", function(VALUE)
 	local source_steamID = GetSteamID(source)
 	local PLAYER = source
 	
-	 MySQL.Async.fetchAll("SELECT * FROM srrcore WHERE STEAMID = @STEAMID", {["@STEAMID"] = source_steamID}, function(CurrentBalance)
-		if (#CurrentBalance >= 1) then
-			for i = 1, #CurrentBalance, 1 do					
-				bank_value = CurrentBalance[i].BANK
-				if bank_value >= VALUE then
-					--
-					MySQL.Async.fetchAll("SELECT * FROM srr_char_warrants WHERE STEAMID = @STEAMID ORDER BY `ts` DESC LIMIT 20", {["@STEAMID"] = source_steamID}, function(warrant)
-						if (#warrant == 0) then
-							MDT_SQL_RESET_D_POINTS_END(PLAYER)
-							TriggerClientEvent("SRR_CHAR:s_Notify", PLAYER, "" .. mdt.Server_Color .. "Your license points was successfully reseted by the court house")
-							--
-							local SQL = 'UPDATE srrcore SET BANK = @MONEY WHERE STEAMID = @ID'
-							local PARAM = {ID = source_steamID, MONEY = bank_value - VALUE}
-							MySQL.Async.execute(SQL,PARAM)
-					elseif (#warrant >= 0) then
-							TriggerClientEvent("SRR_CHAR:s_Notify", PLAYER, "~r~You cannot reset your license points while you have active warrant(s)")
-						end
-					end);
-					--
-				else
-					TriggerClientEvent("SRR_CHAR:s_Notify", USER, "~g~Money~w~: Not enough money in bank account, Could not process the CDL course")
-				end
-			end
-		elseif (#CurrentBalance == 0 ) then
-			--
+	MySQL.Async.fetchAll("SELECT * FROM srr_char_warrants WHERE STEAMID = @STEAMID ORDER BY `ts` DESC LIMIT 20", {["@STEAMID"] = source_steamID}, function(warrant)
+	if (#warrant == 0) then
+		MDT_SQL_RESET_D_POINTS_END(PLAYER)
+		TriggerClientEvent("SRR_CHAR:s_Notify", PLAYER, "" .. mdt.Server_Color .. "Your license points was successfully reseted by the court house")
+		--
+		local SQL = 'UPDATE srrcore SET BANK = @MONEY WHERE STEAMID = @ID'
+		local PARAM = {ID = source_steamID, MONEY = bank_value - VALUE}
+		MySQL.Async.execute(SQL,PARAM)
+		elseif (#warrant >= 0) then
+			TriggerClientEvent("SRR_CHAR:s_Notify", PLAYER, "~r~You cannot reset your license points while you have active warrant(s)")	
 		end
     end);
 end)
@@ -388,10 +455,12 @@ end
 
 -- Add current plate to database SQL-function (EVENT)
 function MDT_SQL_ADD_PLATE(source, plate, veh_name)
-	local source_steamID = GetSteamID(source)
 	local PLAYER = source
+	local source_steamID = GetSteamID(PLAYER)
 	--
-	SRR_MONEY_BANK_REM_VALUE_REG(PLAYER, source_steamID, 500, plate, veh_name)
+	TriggerClientEvent("MDT_SQL_VEHICLE_NOTE_REG", PLAYER, plate)
+	MySQL.Async.execute("INSERT INTO srr_char_plate (`ts`, `STEAMID`, `Username`, `plate_number`, `veh_name`) VALUES (NOW(), @STEAMID, @Username, @plate_number, 	 @veh_name);", {["@STEAMID"] = source_steamID, ["@Username"] = GetPlayerName(PLAYER), ['@plate_number'] = plate, ['@veh_name'] = veh_name}, function()
+	end);
 end
 
 -- Remove typed plate to database SQL-function (EVENT)
@@ -412,7 +481,7 @@ AddEventHandler("MDT_SQL_CHECK_PLATE", function(plate, veh_displaytext)
 		if (#PlateInfo == 0) then
 			MDT_SQL_ADD_PLATE(PLAYER, plate, veh_displaytext)
 		elseif (#PlateInfo >= 0) then
-			TriggerClientEvent("SRR_CHAR:s_Notify", PLAYER, "" .. mdt.Server_Color .. "VEH REG~w~: This plate is already registered to San Andreas DMV")
+			TriggerClientEvent("SRR_CHAR:s_Notify", PLAYER, mdt.Server_Color .. "VEH REG~w~: This plate is already registered to San Andreas")
 		end
 	end);
 end)
@@ -449,8 +518,10 @@ end
 AddEventHandler('playerDropped', function(reason)
 	local PLAYER = source
 	source_steamID = GetSteamID(PLAYER)
-	MySQL.Async.execute("DELETE FROM srr_char_plate WHERE STEAMID = @STEAMID", {["@STEAMID"] = source_steamID}, function()
-	end);
+	if mdt.Server_Del_Veh == true then
+		MySQL.Async.execute("DELETE FROM srr_char_plate WHERE STEAMID = @STEAMID", {["@STEAMID"] = source_steamID}, function()
+		end);
+	end
 end)
 
 -------------------------------
@@ -506,32 +577,30 @@ AddEventHandler("MDT_SKIP_EVENT:PLATE_DEL_2", function(plate)
 	end);
 end)
 
----------------------------------
--- */* MONEY SQL FUNCTIONS */* --
----------------------------------
+------------------------------------------------------------------------------------------------
+--- */* EVENT FOR REMOVING PLAYER WARRANTS WHEN DOING SOMETHING (ETC RELEASED FROM JAIL) */* ---
+------------------------------------------------------------------------------------------------
 
--- Remove money when registration of a vehicle is being processed SQL-function
-function SRR_MONEY_BANK_REM_VALUE_REG(USER, ID, VALUE, plate, veh_name)
-	local source_steamID = GetSteamID(USER)
-    local Username = GetPlayerName(USER)
-	local PLAYER = source
-		
-	TriggerClientEvent("MDT_SQL_VEHICLE_NOTE_REG", USER, plate)
-	MySQL.Async.execute("INSERT INTO srr_char_plate (`ts`, `STEAMID`, `Username`, `plate_number`, `veh_name`) VALUES (NOW(), @STEAMID, @Username, @plate_number, 	 @veh_name);", {["@STEAMID"] = source_steamID, ["@Username"] = GetPlayerName(USER), ['@plate_number'] = plate, ['@veh_name'] = veh_name}, function()
-	end);
+--[[
+Use this if you want to clear persons warrants from outside the script [etc jailscript on release]
+- * \ / * - - * \ / * - - * \ / * - - * \ / * - - * \ / * - - * \ / * - - * \ / * - - * \ / * -
+	TriggerServerEvent('SRR:RemoveFromWarrentList', GetPlayerServerId(PlayerId()))
+- * / \ * - - * / \ * - - * / \ * - - * / \ * - - * / \ * - - * / \ * - - * / \ * - - * / \ * -
+--]]
+
+-- Remove warrants (event)
+RegisterServerEvent("SRR:RemoveFromWarrentList")
+AddEventHandler('SRR:RemoveFromWarrentList', function(ID)
+    RemovePlayerFromWanted(ID)
+end)
+
+-- Remove warrants (func)
+function RemovePlayerFromWanted(ID)
+    local steamID = GetSteamID(ID)
+    local sql = "DELETE FROM srr_char_warrants WHERE steamID = @id"
+    local param = {id = steamID }
+    MySQL.Async.execute(sql, param )
 end
-
--- Remove money when de-registration of a vehicle is being processed SQL-function
-function SRR_MONEY_BANK_REM_VALUE_DEREG(USER, ID, VALUE, plate)
-    local Username = GetPlayerName(USER)
-	local source_steamID = GetSteamID(USER)
-	local PLAYER = source
-	TriggerClientEvent("SRR_CHAR:s_Notify", USER, "" .. mdt.Server_Color .. "VEH DEREG~w~: Plate was successfully removed from the plate database")
-	MySQL.Async.execute("DELETE FROM srr_char_plate WHERE STEAMID = @STEAMID and plate_number = @plate_number;",
-	{["@STEAMID"] = source_steamID, ['@plate_number'] = plate}, function()
-	end);
-end
-
 
 -------------------------------------
 --- */* SCRIPT BASE FUNCTIONS */* ---

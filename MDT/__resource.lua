@@ -1,6 +1,5 @@
 ----------------------------------------------
----- */* STATEWIDE REALISTIC ROLEPLAY */* ----
-----    ---   / AUTHOR: ALPHA    ----	  ----
+----    ---   / AUTHOR: ALPHA \   ----	  ----
 ----------------------------------------------
 
 -- Alpha Email: clatani123123@gmail.com
@@ -26,6 +25,13 @@ server_scripts {
 	'CHAR/char_server.lua',
 	
 	'config.lua', -- */* MAIN CONFIG FILE */*
+	
+	-- ALL LICENSES FILES
+	'LICENSE/CDL/cdl_server.lua',
+	--
+	'LICENSE/DMV/dmv_server.lua',
+	--
+	'LICENSE/Weapon/weapon_server.lua',
 }
 
 -- */* CLIENT SCRIPTS (CLIENTSIDE) */*
@@ -38,4 +44,12 @@ client_scripts {
 	'CHAR/char_client.lua',
 
 	'config.lua', -- */* MAIN CONFIG FILE */*
+	--
+	'LICENSE/blips_c.lua', -- */* BLIPS FOR EVERYTHING IN SYSTEM
+	-- ALL LICENSES FILES
+	'LICENSE/CDL/cdl_client.lua',
+	--
+	'LICENSE/DMV/dmv_client.lua',
+	--
+	'LICENSE/Weapon/weapon_client.lua',
 }

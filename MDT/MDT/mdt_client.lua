@@ -1,6 +1,5 @@
 ----------------------------------------------
----- */* STATEWIDE REALISTIC ROLEPLAY */* ----
-----   STATEWIDERR.NET / AUTHOR: ALPHA    ----
+----    ---   / AUTHOR: ALPHA \   ----	  ----
 ----------------------------------------------
 
 -- Alpha Email: clatani123123@gmail.com
@@ -36,7 +35,6 @@ mdt_chari = {};
 
 -- */* Main Page Vars */*
 CHAR_MDT_ONDUTY_VAR = true
-CHAR_MDT_VERSION_CURRENT = "1.0"
 CHAR_MDT_STATUS_CURRENT = "STABLE"
 CHAR_MDT_NOTE = "NOT SET"
 
@@ -252,11 +250,24 @@ Citizen.CreateThread(function()
 				drawTxt(1.043, 0.830, 1.0,1.0,0.48, "~w~Lastname: ~c~"..mdt_id[i].Lastname, 255, 255, 255, 200)
 				drawTxt(1.043, 0.855, 1.0,1.0,0.48, "~w~D/O/B: ~c~"..mdt_id[i].DOB, 255, 255, 255, 200)
 				drawTxt(1.043, 0.880, 1.0,1.0,0.48, "~w~Gender: ~c~"..mdt_id[i].Gender, 255, 255, 255, 200)
-				if mdt_id[i].license_p >= 15 then
-					drawTxt(1.043, 0.905, 1.0,1.0,0.48, "~w~Driver's License Points: ~r~15 (suspended)", 255, 255, 255, 200)
+				if mdt.Server_Licenses == true then
+					drawTxt(1.043, 0.905, 1.0,1.0,0.48, "~w~Valid Driver's License: ~c~"..tostring(mdt_id[i].d_license), 255, 255, 255, 200)
+					drawTxt(1.043, 0.930, 1.0,1.0,0.48, "~w~Valid C-Driver's License: ~c~"..tostring(mdt_id[i].cd_license), 255, 255, 255, 200)
+					drawTxt(1.043, 0.980, 1.0,1.0,0.48, "~w~Valid Pilot License(~y~IN-DEV~w~): ~c~"..tostring(mdt_id[i].b_license), 255, 255, 255, 200)
+					drawTxt(1.043, 1.005, 1.0,1.0,0.48, "~w~Valid Firearm's License: ~c~"..tostring(mdt_id[i].f_license), 255, 255, 255, 200)
+					if mdt_id[i].license_p >= 15 then
+						drawTxt(1.043, 0.955, 1.0,1.0,0.48, "~w~Driver's License Points: ~r~15 (suspended)", 255, 255, 255, 200)
+					else
+						drawTxt(1.043, 0.955, 1.0,1.0,0.48, "~w~Driver's License Points: ~c~"..mdt_id[i].license_p, 255, 255, 255, 200)
+					end
 				else
-					drawTxt(1.043, 0.905, 1.0,1.0,0.48, "~w~Driver's License Points: ~c~"..mdt_id[i].license_p, 255, 255, 255, 200)
+					if mdt_id[i].license_p >= 15 then
+						drawTxt(1.043, 0.905, 1.0,1.0,0.48, "~w~Driver's License Points: ~r~15 (suspended)", 255, 255, 255, 200)
+					else
+						drawTxt(1.043, 0.905, 1.0,1.0,0.48, "~w~Driver's License Points: ~c~"..mdt_id[i].license_p, 255, 255, 255, 200)
+					end
 				end
+				--
 				if (i == #mdt_id) then
 					drawTxt(1.192, 1.245, 1.0,1.0,0.45, "~c~P R E S S  ~c~D E L  ~c~T O  C L O S E", 255, 255, 255, 200);
 				end
@@ -338,7 +349,7 @@ function ShowMDTblackbox_MDT_MAIN(menu, desc1, desc2, desc3, line1, line2, line3
 			drawTxt(1.043, 1.005, 1.0,1.0,0.48, line9, 255, 255, 255, 200)
 			drawTxt(1.043, 1.030, 1.0,1.0,0.48, line10, 255, 255, 255, 200)
 			drawTxt(1.043, 1.055, 1.0,1.0,0.48, line11..CHAR_MDT_NOTE, 255, 255, 255, 200)
-			drawTxt(1.043, 1.080, 1.0,1.0,0.48, line12..CHAR_MDT_VERSION_CURRENT, 255, 255, 255, 200)
+			drawTxt(1.043, 1.080, 1.0,1.0,0.48, line12..mdt.Script_Ver, 255, 255, 255, 200)
 			drawTxt(1.043, 1.105, 1.0,1.0,0.48, line13..CHAR_MDT_STATUS_CURRENT, 255, 255, 255, 200)
 			drawTxt(1.043, 1.130, 1.0,1.0,0.48, line14, 255, 255, 255, 200)
 			drawTxt(1.043, 1.155, 1.0,1.0,0.48, line15, 255, 255, 255, 200)
@@ -531,9 +542,9 @@ local veh_displaytext = GetLabelText(GetDisplayNameFromVehicleModel(GetEntityMod
 
 
 	if IsPedInAnyVehicle(GetPlayerPed(-1), 0) and (GetPedInVehicleSeat(GetVehiclePedIsIn(GetPlayerPed(-1), 0), -1) == GetPlayerPed(-1)) and GetVehicleClass(vehicle) == 0 or GetVehicleClass(vehicle) == 1 or GetVehicleClass(vehicle) == 2 or GetVehicleClass(vehicle) == 3 or GetVehicleClass(vehicle) == 4 or GetVehicleClass(vehicle) == 5 or GetVehicleClass(vehicle) == 6 or GetVehicleClass(vehicle) == 7 or GetVehicleClass(vehicle) == 8 or GetVehicleClass(vehicle) == 9 or GetVehicleClass(vehicle) == 10 or GetVehicleClass(vehicle) == 11 or GetVehicleClass(vehicle) == 12 then
-		--
-		TriggerServerEvent("MDT_SQL_CHECK_PLATE", vehicleplate, veh_displaytext)
-		--
+	--
+	TriggerServerEvent("MDT_SQL_CHECK_PLATE", vehicleplate, veh_displaytext)
+	--
 	elseif GetVehicleClass(vehicle) == 18 or GetVehicleClass(vehicle) == 19 or GetVehicleClass(vehicle) == 17 then
 		drawNotification("" .. mdt.Server_Color .. "VEH REG~w~: This vehicle is already registered to the goverment")
 	elseif GetVehicleClass(vehicle) == 16 or GetVehicleClass(vehicle) == 13 or GetVehicleClass(vehicle) == 14 or GetVehicleClass(vehicle) == 15 then
@@ -609,3 +620,15 @@ function DrawTextOnScreen(x,y,z, text)
     local factor = (string.len(text)) / 370
     DrawRect(_x,_y+0.0125, 0.015+ factor, 0.03, 41, 11, 41, 68)
 end
+
+-- Template for 25 meters message
+RegisterNetEvent('sendProximityMessage25Command')
+AddEventHandler('sendProximityMessage25Command', function(msg)
+  local myId = PlayerId()
+  local pid = GetPlayerFromServerId(id)
+  if pid == myId then
+    TriggerEvent("chatMessage", "", {120, 95, 190}, msg)
+  elseif GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(myId)), GetEntityCoords(GetPlayerPed(pid)), true) < 25.000 then
+    TriggerEvent("chatMessage", "", {120, 95, 190}, msg)
+  end
+end)

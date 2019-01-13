@@ -1,12 +1,10 @@
 ----------------------------------------------
----- */* STATEWIDE REALISTIC ROLEPLAY */* ----
-----   STATEWIDERR.NET / AUTHOR: ALPHA    ----
+----    ---   / AUTHOR: ALPHA \   ----	  ----
 ----------------------------------------------
 
 -- Alpha Email: clatani123123@gmail.com
 -- SRR Email: statewiderealisticrp@gmail.com
 -- Alpha Discord: Alpha#5199
--- SRR Website: statewiderr.net
 
 ----------------------------------------------
 ---- YOU HAVE NO RIGHTS TO COPY/UPLOAD OR ----
@@ -61,7 +59,11 @@ RegisterCommand("character", function(source, args, rawCommand)
 			SRR_CHAR_CREATE(PLAYER, STEAMID, args[2], args[3], args[4], args[5])
 			TriggerClientEvent("SRR_CHAR:s_Notify", PLAYER, "" .. mdt.Server_Color .. "CHAR: ~w~"..args[2].." "..args[3].." Was created successfully")
 		else
-			TriggerClientEvent('SRR_CHAR:HomePage', USER, mdt.Server_Color .. mdt.Server_Name .. "~w~ | MY CHARACTER", "~w~Here you can find some useful information and settings about your ingame charcter(s).", "~w~Here is a small guide on how to use the char system.", "", "" .. mdt.Server_Color .. "CHARACTER COMMANDS:", "~c~/character create Firstname Lastname DD/MM/YYYY Gender ~w~to create an character", "~c~/character reset ~w~to reset your character(s)", "", "" .. mdt.Server_Color .. "MY CHARACTER:", "Firstname: ~c~"..firstname, "Lastname: ~c~"..lastname, "DOB: ~c~"..dob, "Gender: ~c~"..gender, "Driver's License: ~c~"..tostring(driverlicense), "Commercial Driver's License: ~c~"..tostring(commercialdriverlicense), "Driver's License Points: ~c~"..driverlicensepoints, "Pilot License: ~c~"..tostring(boatinglicense), "Firearm's License: ~c~"..tostring(firearmlicense))
+			if mdt.Server_Licenses == true then
+				TriggerClientEvent('SRR_CHAR:HomePage', USER, mdt.Server_Color .. mdt.Server_Name .. "~w~ | CHARACTERS", "~w~Here you can find some useful information and settings about your ingame charcter(s).", "~w~Here is a small guide on how to use the char system.", "", "" .. mdt.Server_Color .. "CHARACTER COMMANDS:", "~c~/character create Firstname Lastname DD/MM/YYYY Gender ~w~to create an character", "~c~/character reset ~w~to reset your character(s)", "", "" .. mdt.Server_Color .. "MY CHARACTER:", "Firstname: ~c~"..firstname, "Lastname: ~c~"..lastname, "DOB: ~c~"..dob, "Gender: ~c~"..gender, "Driver's License: ~c~"..tostring(driverlicense), "Commercial Driver's License: ~c~"..tostring(commercialdriverlicense), "Driver's License Points: ~c~"..driverlicensepoints, "Pilot License(~y~IN-DEV~w~): ~c~"..tostring(boatinglicense), "Firearm's License: ~c~"..tostring(firearmlicense))
+			else
+				TriggerClientEvent('SRR_CHAR:HomePage', USER, mdt.Server_Color .. mdt.Server_Name .. "~w~ | CHARACTERS", "~w~Here you can find some useful information and settings about your ingame charcter(s).", "~w~Here is a small guide on how to use the char system.", "", "" .. mdt.Server_Color .. "CHARACTER COMMANDS:", "~c~/character create Firstname Lastname DD/MM/YYYY Gender ~w~to create an character", "~c~/character reset ~w~to reset your character(s)", "", "" .. mdt.Server_Color .. "MY CHARACTER:", "Firstname: ~c~"..firstname, "Lastname: ~c~"..lastname, "DOB: ~c~"..dob, "Gender: ~c~"..gender, "Driver's License Points: ~c~"..driverlicensepoints, "", "", "", "" , "", false)
+			end
 		end
 	elseif args[1] == "reset" then
 		SRR_CHAR_RESET(PLAYER, STEAMID)
@@ -92,13 +94,21 @@ function SRR_CHAR_INFO(USER, ID)
 					lastname = CharacterInfo[i].Lastname
 					dob = CharacterInfo[i].DOB
 					gender = CharacterInfo[i].Gender
-					--driverlicense = CharacterInfo[i].d_license
-					--commercialdriverlicense = CharacterInfo[i].cd_license
+					driverlicense = CharacterInfo[i].d_license
+					commercialdriverlicense = CharacterInfo[i].cd_license
 					driverlicensepoints = CharacterInfo[i].license_p
-					--boatinglicense = CharacterInfo[i].b_license
-					--firearmlicense = CharacterInfo[i].f_license
+					boatinglicense = CharacterInfo[i].b_license
+					firearmlicense = CharacterInfo[i].f_license
 					--
-					TriggerClientEvent('SRR_CHAR:HomePage', USER, mdt.Server_Color .. mdt.Server_Name .. "~w~ | CHARACTERS", "~w~Here you can find some useful information and settings about your ingame charcter(s).", "~w~Here is a small guide on how to use the char system.", "", "" .. mdt.Server_Color .. "CHARACTER COMMANDS:", "~c~/character create Firstname Lastname DD/MM/YYYY Gender ~w~to create an character", "~c~/character reset ~w~to reset your character(s)", "", "" .. mdt.Server_Color .. "MY CHARACTER:", "Firstname: ~c~"..firstname, "Lastname: ~c~"..lastname, "DOB: ~c~"..dob, "Gender: ~c~"..gender, "Driver's License Points: ~c~"..driverlicensepoints, "", "", "", "" , "", false)
+					if driverlicensepoints >= 15 then
+						driverlicensepoints = "~r~15 (suspended)"
+					end
+					--
+					if mdt.Server_Licenses == true then
+						TriggerClientEvent('SRR_CHAR:HomePage', USER, mdt.Server_Color .. mdt.Server_Name .. "~w~ | CHARACTERS", "~w~Here you can find some useful information and settings about your ingame charcter(s).", "~w~Here is a small guide on how to use the char system.", "", "" .. mdt.Server_Color .. "CHARACTER COMMANDS:", "~c~/character create Firstname Lastname DD/MM/YYYY Gender ~w~to create an character", "~c~/character reset ~w~to reset your character(s)", "", "" .. mdt.Server_Color .. "MY CHARACTER:", "Firstname: ~c~"..firstname, "Lastname: ~c~"..lastname, "DOB: ~c~"..dob, "Gender: ~c~"..gender, "Driver's License: ~c~"..tostring(driverlicense), "Commercial Driver's License: ~c~"..tostring(commercialdriverlicense), "Driver's License Points: ~c~"..driverlicensepoints, "Pilot License(~y~IN-DEV~w~): ~c~"..tostring(boatinglicense), "Firearm's License: ~c~"..tostring(firearmlicense))
+					else
+						TriggerClientEvent('SRR_CHAR:HomePage', USER, mdt.Server_Color .. mdt.Server_Name .. "~w~ | CHARACTERS", "~w~Here you can find some useful information and settings about your ingame charcter(s).", "~w~Here is a small guide on how to use the char system.", "", "" .. mdt.Server_Color .. "CHARACTER COMMANDS:", "~c~/character create Firstname Lastname DD/MM/YYYY Gender ~w~to create an character", "~c~/character reset ~w~to reset your character(s)", "", "" .. mdt.Server_Color .. "MY CHARACTER:", "Firstname: ~c~"..firstname, "Lastname: ~c~"..lastname, "DOB: ~c~"..dob, "Gender: ~c~"..gender, "Driver's License Points: ~c~"..driverlicensepoints, "", "", "", "" , "", false)
+					end
 					end
 			elseif (#CharacterInfo == 0 ) then
 				TriggerClientEvent('SRR_CHAR:HomePage', USER, mdt.Server_Color .. mdt.Server_Name .. "~w~ | CHARACTERS", "~w~Here you can find some useful information and settings about your ingame charcter(s).", "~w~Here is a small guide on how to use the char system.", "", "" .. mdt.Server_Color .. "CHARACTER COMMANDS:", "~c~/character create Firstname Lastname DD/MM/YYYY Gender ~w~to create an character", "~c~/character reset ~w~to reset your character(s)", "", "~r~*/* IMPORTANT NOTE */*", "Please create an character to be avail to RP properly", "", "", "", "", "", "", "", "", "", false)
@@ -126,7 +136,15 @@ AddEventHandler('MDT_SKIP_EVENT:SHOW_CHAR_INFO', function()
 					boatinglicense = CharacterInfo[i].b_license
 					firearmlicense = CharacterInfo[i].f_license
 					--
-					TriggerClientEvent('SRR_CHAR:HomePage', PLAYER, mdt.Server_Color .. mdt.Server_Name .. "~w~ | MY CHARACTER", "~w~Here you can find some useful information and settings about your ingame charcter(s).", "~w~Here is a small guide on how to use the char system.", "", "" .. mdt.Server_Color .. " CHARACTER COMMANDS:", "~c~/character create Firstname Lastname DD/MM/YYYY Gender ~w~to create an character", "~c~/character reset ~w~to reset your character(s)", "", "" .. mdt.Server_Color .. "MY CHARACTER:", "Firstname: ~c~"..firstname, "Lastname: ~c~"..lastname, "DOB: ~c~"..dob, "Gender: ~c~"..gender, "Driver's License: ~c~"..tostring(driverlicense), "Commercial Driver's License: ~c~"..tostring(commercialdriverlicense), "Driver's License Points: ~c~"..driverlicensepoints, "Pilot License: ~c~"..tostring(boatinglicense), "Firearm's License: ~c~"..tostring(firearmlicense), "", false)
+					if driverlicensepoints >= 15 then
+						driverlicensepoints = "~r~15 (suspended)"
+					end
+					--
+					if mdt.Server_Licenses == true then
+						TriggerClientEvent('SRR_CHAR:HomePage', USER, mdt.Server_Color .. mdt.Server_Name .. "~w~ | CHARACTERS", "~w~Here you can find some useful information and settings about your ingame charcter(s).", "~w~Here is a small guide on how to use the char system.", "", "" .. mdt.Server_Color .. "CHARACTER COMMANDS:", "~c~/character create Firstname Lastname DD/MM/YYYY Gender ~w~to create an character", "~c~/character reset ~w~to reset your character(s)", "", "" .. mdt.Server_Color .. "MY CHARACTER:", "Firstname: ~c~"..firstname, "Lastname: ~c~"..lastname, "DOB: ~c~"..dob, "Gender: ~c~"..gender, "Driver's License: ~c~"..tostring(driverlicense), "Commercial Driver's License: ~c~"..tostring(commercialdriverlicense), "Driver's License Points: ~c~"..driverlicensepoints, "Pilot License(~y~IN-DEV~w~): ~c~"..tostring(boatinglicense), "Firearm's License: ~c~"..tostring(firearmlicense))
+					else
+						TriggerClientEvent('SRR_CHAR:HomePage', USER, mdt.Server_Color .. mdt.Server_Name .. "~w~ | CHARACTERS", "~w~Here you can find some useful information and settings about your ingame charcter(s).", "~w~Here is a small guide on how to use the char system.", "", "" .. mdt.Server_Color .. "CHARACTER COMMANDS:", "~c~/character create Firstname Lastname DD/MM/YYYY Gender ~w~to create an character", "~c~/character reset ~w~to reset your character(s)", "", "" .. mdt.Server_Color .. "MY CHARACTER:", "Firstname: ~c~"..firstname, "Lastname: ~c~"..lastname, "DOB: ~c~"..dob, "Gender: ~c~"..gender, "Driver's License Points: ~c~"..driverlicensepoints, "", "", "", "" , "", false)
+					end
 					end
 			elseif (#CharacterInfo == 0 ) then
 				TriggerClientEvent('SRR_CHAR:HomePage', PLAYER, mdt.Server_Color .. mdt.Server_Name .. "~w~ | MY CHARACTER", "~w~Here you can find some useful information and settings about your ingame charcter(s).", "~w~Here is a small guide on how to use the char system.", "", "" .. mdt.Server_Color .. "CHARACTER COMMANDS:", "~c~/character create Firstname Lastname DD/MM/YYYY Gender ~w~to create an character", "~c~/character reset ~w~to reset your character(s)", "", "~r~*/* IMPORTANT NOTE */*", "Please create an character to be avail to RP properly", "", "", "", "", "", "", "", "", "", false)

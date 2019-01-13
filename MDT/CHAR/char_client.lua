@@ -1,12 +1,10 @@
 ----------------------------------------------
----- */* STATEWIDE REALISTIC ROLEPLAY */* ----
-----   STATEWIDERR.NET / AUTHOR: ALPHA    ----
+----    ---   / AUTHOR: ALPHA \   ----	  ----
 ----------------------------------------------
 
 -- Alpha Email: clatani123123@gmail.com
 -- SRR Email: statewiderealisticrp@gmail.com
 -- Alpha Discord: Alpha#5199
--- SRR Website: statewiderr.net
 
 ----------------------------------------------
 ---- YOU HAVE NO RIGHTS TO COPY/UPLOAD OR ----
@@ -85,9 +83,7 @@ function ShowMDTblackbox(menu, desc1, desc2, desc3, line1, line2, line3, line4, 
 			drawTxt(1.043, 1.155, 1.0,1.0,0.48, line15, 255, 255, 255, 200)
 			-- In blood settings
 			if levels == true then
-				drawTxt(1.043, 1.180, 1.0,1.0,0.48, "" .. mdt.Server_Color .. "OUT OF ROLEPLAY INFO:", 255, 255, 255, 200)
-				drawTxt(1.043, 1.205, 1.0,1.0,0.48, "Player Rank: ~c~IN DEV", 255, 255, 255, 200)
-				drawTxt(1.043, 1.230, 1.0,1.0,0.48, "Player Time: ~c~IN DEV", 255, 255, 255, 200)
+				--
 			end
 			drawTxt(1.192, 1.245, 1.0,1.0,0.45, "~c~P R E S S  ~c~D E L  ~c~T O  C L O S E", 255, 255, 255, 200);
 		end

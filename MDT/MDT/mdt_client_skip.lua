@@ -1,6 +1,5 @@
 ----------------------------------------------
----- */* STATEWIDE REALISTIC ROLEPLAY */* ----
-----   STATEWIDERR.NET / AUTHOR: ALPHA    ----
+----    ---   / AUTHOR: ALPHA \   ----	  ----
 ----------------------------------------------
 
 -- Alpha Email: clatani123123@gmail.com
@@ -49,6 +48,20 @@ local ped = GetPlayerPed(-1)
 		if GetVehicleClass( GetVehiclePedIsIn(ped, false ) ) == 18 then
 			--
 			TriggerServerEvent("MDT_SKIP_EVENT:BOLO_CHECK_2", str)
+		end
+	end
+end)
+
+---------------------------------------------------------------------------------------
+
+-- Points commands [add] - (events)
+RegisterNetEvent("MDT_SKIP_EVENT:POINT_ADD")
+AddEventHandler("MDT_SKIP_EVENT:POINT_ADD", function(id, points)
+local ped = GetPlayerPed(-1)
+	if IsPedInAnyVehicle(ped) then
+		if GetVehicleClass( GetVehiclePedIsIn(ped, false ) ) == 18 then
+			--
+			TriggerServerEvent("MDT_SKIP_EVENT:POINT_ADD_2", id, points)
 		end
 	end
 end)
