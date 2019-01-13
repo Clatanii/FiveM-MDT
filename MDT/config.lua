@@ -30,6 +30,14 @@ mdt = {
 	Server_Show_War = true -- (Valid Options: true or false)
 }
 
+-- Message on resource start in server console/log
+AddEventHandler('onResourceStart', function(resource)
+	print("------------------------------------------------------------")
+	print("-- Author: Alpha#5199 / - / Version: "..mdt.Script_Ver.."")
+	print("-- Loading: Installing script & connecting to SQL")
+	print("-- Resource: MDT & Licenses & Reg & Character System")
+	print("------------------------------------------------------------")
+end)
 
 --[[
 */* ALL COLORS AVAILBLE */*

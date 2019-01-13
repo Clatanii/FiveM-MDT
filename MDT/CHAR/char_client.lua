@@ -27,13 +27,13 @@ CHAR_DRUG_LEVEL = 0.0
 
 -- Show Black Box Template
 RegisterNetEvent('SRR_CHAR:HomePage')
-AddEventHandler('SRR_CHAR:HomePage', function(menu, desc1, desc2, desc3, line1, line2, line3, line4, line5, line6, line7, line8, line9, line10, line11, line12, line13, line14, line15, levels)
+AddEventHandler('SRR_CHAR:HomePage', function(menu, desc1, desc2, desc3, line1, line2, line3, line4, line5, line6, line7, line8, line9, line10, line11, line12, line13, line14, line15, line16, line17)
   Citizen.CreateThread(function()
 	showmyinfo = false
 	Citizen.Wait(0)
 	PlaySoundFrontend(-1, "Menu_Accept", "Phone_SoundSet_Default", 1);
 	showmyinfo = true
-	ShowMDTblackbox(menu, desc1, desc2, desc3, line1, line2, line3, line4, line5, line6, line7, line8, line9, line10, line11, line12, line13, line14, line15, levels)
+	ShowMDTblackbox(menu, desc1, desc2, desc3, line1, line2, line3, line4, line5, line6, line7, line8, line9, line10, line11, line12, line13, line14, line15, line16, line17)
 
     while showmyinfo do
       Citizen.Wait(1)
@@ -55,7 +55,7 @@ end)
 --- */* SCRIPT FUNCTIONS */* ---
 --------------------------------
 
-function ShowMDTblackbox(menu, desc1, desc2, desc3, line1, line2, line3, line4, line5, line6, line7, line8, line9, line10, line11, line12, line13, line14, line15, levels)
+function ShowMDTblackbox(menu, desc1, desc2, desc3, line1, line2, line3, line4, line5, line6, line7, line8, line9, line10, line11, line12, line13, line14, line15, line16, line17)
 	Citizen.CreateThread(function()
 	local resx, resy = GetScreenResolution()
 	local xoffs = 355
@@ -81,10 +81,9 @@ function ShowMDTblackbox(menu, desc1, desc2, desc3, line1, line2, line3, line4, 
 			drawTxt(1.043, 1.105, 1.0,1.0,0.48, line13, 255, 255, 255, 200)
 			drawTxt(1.043, 1.130, 1.0,1.0,0.48, line14, 255, 255, 255, 200)
 			drawTxt(1.043, 1.155, 1.0,1.0,0.48, line15, 255, 255, 255, 200)
-			-- In blood settings
-			if levels == true then
-				--
-			end
+			drawTxt(1.043, 1.180, 1.0,1.0,0.48, line16, 255, 255, 255, 200)
+			drawTxt(1.043, 1.205, 1.0,1.0,0.48, line17, 255, 255, 255, 200)
+			drawTxt(1.387, 1.253, 1.0,1.0,0.40, line18, 255, 255, 255, 200)
 			drawTxt(1.192, 1.245, 1.0,1.0,0.45, "~c~P R E S S  ~c~D E L  ~c~T O  C L O S E", 255, 255, 255, 200);
 		end
 	end)

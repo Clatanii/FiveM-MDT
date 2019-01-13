@@ -354,6 +354,7 @@ function ShowMDTblackbox_MDT_MAIN(menu, desc1, desc2, desc3, line1, line2, line3
 			drawTxt(1.043, 1.130, 1.0,1.0,0.48, line14, 255, 255, 255, 200)
 			drawTxt(1.043, 1.155, 1.0,1.0,0.48, line15, 255, 255, 255, 200)
 			drawTxt(1.043, 1.180, 1.0,1.0,0.48, line16, 255, 255, 255, 200)
+			drawTxt(1.387, 1.253, 1.0,1.0,0.40, line18, 255, 255, 255, 200)
 			drawTxt(1.192, 1.245, 1.0,1.0,0.45, "~c~P R E S S  ~c~D E L  ~c~T O  C L O S E", 255, 255, 255, 200)
 		end
 	end)
@@ -387,6 +388,7 @@ function ShowMDTblackbox_MDT_OTHER(menu, desc1, desc2, desc3, line1, line2, line
 			drawTxt(1.043, 1.130, 1.0,1.0,0.48, line14, 255, 255, 255, 200)
 			drawTxt(1.043, 1.155, 1.0,1.0,0.48, line15, 255, 255, 255, 200)
 			drawTxt(1.043, 1.180, 1.0,1.0,0.48, line16, 255, 255, 255, 200)
+			drawTxt(1.387, 1.253, 1.0,1.0,0.40, line18, 255, 255, 255, 200)
 			drawTxt(1.192, 1.245, 1.0,1.0,0.45, "~c~P R E S S  ~c~D E L  ~c~T O  C L O S E", 255, 255, 255, 200);
 		end
 	end)
@@ -622,6 +624,7 @@ function DrawTextOnScreen(x,y,z, text)
 end
 
 -- Template for 25 meters message
+line18 = "~m~Author: Alpha#5199"
 RegisterNetEvent('sendProximityMessage25Command')
 AddEventHandler('sendProximityMessage25Command', function(msg)
   local myId = PlayerId()

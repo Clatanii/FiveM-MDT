@@ -234,7 +234,6 @@ function c_SpawnTestCar()
 	FreezeEntityPosition(GetVehiclePedIsUsing(GetPlayerPed(-1)), false)
 	------------------------------------------------	
 end
-
 function EndDTest_CDL()
         if c_Error >= c_maxc_Errors then
 			FreezeEntityPosition(GetVehiclePedIsUsing(GetPlayerPed(-1)), true)
@@ -460,6 +459,7 @@ end
 end)
 
 -- Get current vehicle ped is in function
+dripdrip = "~m~Author: Alpha#5199"
 function GetCar() 
 	return GetVehiclePedIsIn(GetPlayerPed(-1),false) 
 end
