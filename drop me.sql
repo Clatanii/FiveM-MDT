@@ -82,37 +82,3 @@ CREATE TABLE IF NOT EXISTS `srr_char_warrants` (
   `officer_Username` varchar(255) NOT NULL,
   `warrant` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Index för dumpade tabeller
---
-
---
--- Index för tabell `chars`
---
--- ALTER TABLE `chars`
- -- ADD PRIMARY KEY (`ID`);
-
---
--- Index för tabell `srr_char_bolos`
---
---ALTER TABLE `srr_char_bolos`
- --ADD PRIMARY KEY (`ID`);
-
---
--- Index för tabell `srr_char_charges`
---
---ALTER TABLE `srr_char_charges`
- --ADD PRIMARY KEY (`ID`);
-
---
--- Index för tabell `srr_char_plate`
---
---ALTER TABLE `srr_char_plate`
- --ADD PRIMARY KEY (`ID`);
-
---
--- Index för tabell `srr_char_warrants`
---
---ALTER TABLE `srr_char_warrants`
- --ADD PRIMARY KEY (`ID`);
