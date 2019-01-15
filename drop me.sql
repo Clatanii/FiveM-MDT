@@ -82,5 +82,3 @@ CREATE TABLE IF NOT EXISTS `srr_char_warrants` (
   `officer_Username` varchar(255) NOT NULL,
   `warrant` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
