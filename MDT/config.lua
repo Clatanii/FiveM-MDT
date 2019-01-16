@@ -31,12 +31,14 @@ mdt = {
 }
 
 -- Message on resource start in server console/log
-AddEventHandler('onResourceStart', function(resource)
-	print("------------------------------------------------------------")
-	print("-- Author: Alpha#5199 / - / Version: "..mdt.Script_Ver.."")
-	print("-- Loading: Installing script & connecting to SQL")
-	print("-- Resource: MDT & Licenses & Reg & Character System")
-	print("------------------------------------------------------------")
+AddEventHandler('onResourceStart', function(resourceName)
+	if resourceName == GetCurrentResourceName() then
+	   print("------------------------------------------------------------")
+	   print("-- Author: Alpha#5199 / - / Version: "..mdt.Script_Ver.."")
+	   print("-- Loading: Installing script & connecting to SQL")
+ 	   print("-- Resource: MDT & Licenses & Reg & Character System")
+	   print("------------------------------------------------------------")
+    	end	
 end)
 
 --[[
