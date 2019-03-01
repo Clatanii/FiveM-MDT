@@ -12,9 +12,11 @@
 ----------------------------------------------
 -- *CC* Valdemar Hägglund
 
------------------------------
---- */* SCRIPT CONFIG */* ---
------------------------------
+---------------------------------
+--- */* LOCAL FILE CONFIG */* ---
+---------------------------------
+
+-- */* WINDOW BOOL */*
 showmyinfo = false
 
 -- */* Character RP info */*
@@ -24,6 +26,13 @@ CHAR_DRUG_LEVEL = 0.0
 -----------------------------
 --- */* SCRIPT EVENTS */* ---
 -----------------------------
+
+-- Close all windows with text in file
+RegisterNetEvent('CORE_FIX:CLOSE_2')
+AddEventHandler('CORE_FIX:CLOSE_2', function()
+	-- */* BOOLS */* --
+	showmyinfo = false
+end)
 
 -- Show Black Box Template
 RegisterNetEvent('SRR_CHAR:HomePage')

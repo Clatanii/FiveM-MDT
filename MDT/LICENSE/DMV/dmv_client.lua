@@ -12,9 +12,9 @@
 ----------------------------------------------
 -- *CC* Valdemar Hägglund
 
-----------------------
---- BASE VARIABLES ---
-----------------------
+---------------------------------
+--- */* LOCAL FILE CONFIG */* ---
+---------------------------------
 
 -- +/+ DMV Main +/+ --
 local dmvschool_location = {239.09, -1381.57, 33.74}
@@ -28,15 +28,15 @@ local dmvpedpos = {
 }
 
 -- +/+ Main Arrays +/+ --
-maxErrors = 8 -- Change the amount of Errors allowed for the player to pass the driver test, any number above this will result in a failed test
-onTestEvent = 0
-theorylock = 0
-onTtest = 0
-testblock = 0
-DamageControl = 0
-SpeedControl = 0
-CruiseControl = 0
-Error = 0
+local maxErrors = 8 -- Change the amount of Errors allowed for the player to pass the driver test, any number above this will result in a failed test
+local onTestEvent = 0
+local theorylock = 0
+local onTtest = 0
+local testblock = 0
+local DamageControl = 0
+local SpeedControl = 0
+local CruiseControl = 0
+local Error = 0
 
 -- +/+ Speed Vars +/+ --
 local kmh = 3.6

@@ -17,14 +17,16 @@ resource_manifest_version '05cfa83c-a124-4cfa-a768-c24a5811d8f9'
 
 -- */* SERVER SCRIPTS (SERVERSIDE) */*
 server_scripts {
+	-- SCRIPTS NEEDED
 	'@mysql-async/lib/MySQL.lua', -- */* MYSQL REQUIRED */*
-	--
+	
+	-- CONFIG
+	'config.lua', -- */* MAIN CONFIG FILE */*
+	
 	'MDT/mdt_server.lua', -- */* LOAD SERVER SCRIPT */*
 	
 	-- CHARACTER
 	'CHAR/char_server.lua',
-	
-	'config.lua', -- */* MAIN CONFIG FILE */*
 	
 	-- ALL LICENSES FILES
 	'LICENSE/CDL/cdl_server.lua',
@@ -32,18 +34,22 @@ server_scripts {
 	'LICENSE/DMV/dmv_server.lua',
 	--
 	'LICENSE/Weapon/weapon_server.lua',
+	--
+	'LICENSE/Pilot/pilot_server.lua',
 }
 
 -- */* CLIENT SCRIPTS (CLIENTSIDE) */*
 client_scripts { 
+
+	-- CONFIG
+	'config.lua', -- */* MAIN CONFIG FILE */*
+
 	-- MDT 
 	'MDT/mdt_client.lua', -- */* LOAD MAIN CLIENT SCRIPT */*
 	'MDT/mdt_client_skip.lua', -- */* LOAD EVENT FILE CLIENT SCRIPT */*
 	
 	-- CHARACTER
 	'CHAR/char_client.lua',
-
-	'config.lua', -- */* MAIN CONFIG FILE */*
 	--
 	'LICENSE/blips_c.lua', -- */* BLIPS FOR EVERYTHING IN SYSTEM
 	-- ALL LICENSES FILES
@@ -52,4 +58,6 @@ client_scripts {
 	'LICENSE/DMV/dmv_client.lua',
 	--
 	'LICENSE/Weapon/weapon_client.lua',
+	--
+	'LICENSE/Pilot/pilot_client.lua',
 }

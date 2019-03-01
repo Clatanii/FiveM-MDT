@@ -12,9 +12,9 @@
 ----------------------------------------------
 -- *CC* Valdemar Hägglund
 
-------------------------------------------
---- */* SCRIPT CLIENT LOCAL CONFIG */* ---
-------------------------------------------
+---------------------------------
+--- */* LOCAL FILE CONFIG */* ---
+---------------------------------
 
 -- */* Basic Vars */*
 local ped = GetPlayerPed(-1)
@@ -41,6 +41,29 @@ CHAR_MDT_NOTE = "NOT SET"
 -----------------------------
 --- */* SCRIPT EVENTS */* ---
 -----------------------------
+
+-- Show character window on player join if turned on in config
+AddEventHandler("playerSpawned", function(source, spawn)
+	if mdt.Server_Char_At_Join == true then
+		TriggerServerEvent("CHAR:SHOW_AT_JOIN")
+	end
+end)
+
+-- Close all windows with text in file
+RegisterNetEvent('CORE_FIX:CLOSE_1')
+AddEventHandler('CORE_FIX:CLOSE_1', function()
+	-- */* BOOLS */* --
+	showmyinfo = false
+	
+	-- */* ARRAYS */* --
+	mdt_bolos = {};
+	mdt_warrents = {};
+	mdt_charges = {};
+	mdt_id = {};
+	veh_plate = {};
+	mdt_plate = {};
+	mdt_chari = {};
+end)
 
 -- Vehicle Reg Event
 RegisterNetEvent('MDT_VEH_REG_PART_1')
@@ -253,7 +276,7 @@ Citizen.CreateThread(function()
 				if mdt.Server_Licenses == true then
 					drawTxt(1.043, 0.905, 1.0,1.0,0.48, "~w~Valid Driver's License: ~c~"..tostring(mdt_id[i].d_license), 255, 255, 255, 200)
 					drawTxt(1.043, 0.930, 1.0,1.0,0.48, "~w~Valid C-Driver's License: ~c~"..tostring(mdt_id[i].cd_license), 255, 255, 255, 200)
-					drawTxt(1.043, 0.980, 1.0,1.0,0.48, "~w~Valid Pilot License(~y~IN-DEV~w~): ~c~"..tostring(mdt_id[i].b_license), 255, 255, 255, 200)
+					drawTxt(1.043, 0.980, 1.0,1.0,0.48, "~w~Valid Pilot License: ~c~"..tostring(mdt_id[i].b_license), 255, 255, 255, 200)
 					drawTxt(1.043, 1.005, 1.0,1.0,0.48, "~w~Valid Firearm's License: ~c~"..tostring(mdt_id[i].f_license), 255, 255, 255, 200)
 					if mdt_id[i].license_p >= 15 then
 						drawTxt(1.043, 0.955, 1.0,1.0,0.48, "~w~Driver's License Points: ~r~15 (suspended)", 255, 255, 255, 200)
@@ -624,9 +647,9 @@ function DrawTextOnScreen(x,y,z, text)
 end
 
 -- Template for 25 meters message
-line18 = "~m~Author: Alpha#5199"
+line18 = "        ~m~FiveM Network"
 RegisterNetEvent('sendProximityMessage25Command')
-AddEventHandler('sendProximityMessage25Command', function(msg)
+AddEventHandler('sendProximityMessage25Command', function(id, msg)
   local myId = PlayerId()
   local pid = GetPlayerFromServerId(id)
   if pid == myId then

@@ -13,41 +13,29 @@
 -- *CC* Valdemar Hägglund
 
 -----------------------------
---- */* SCRIPT CONFIG */* ---
------------------------------
-
--- */* Character Version */* --
-Base_Char_Version = "0.1"
-
--- */* NIL VARS */* --
-local firstname = "not set"
-local lastname = "not set"
-local dob = "not set"
-local gender = "not set"
-local driverlicense = "not set"
-local commercialdriverlicense = "not set"
-local driverlicensepoints = "not set"
-local boatinglicense = "not set"
-local firearmlicense = "not set"
-
--- */* DEBUG VARS */* --
-local CHAR_DEBUG_MODE = false -- */* NOT IN USE IN THIS VERSION */*
-
-
------------------------------
 --- */* SCRIPT EVENTS */* ---
 -----------------------------
+
+-- */* EVENT FOR SHOWING CHAR WINDOW AT JOIN IF TURNED ON IF CONFIG */*
+RegisterServerEvent("CHAR:SHOW_AT_JOIN")
+AddEventHandler("CHAR:SHOW_AT_JOIN", function()
+	local PLAYER = source
+	local STEAMID = GetSteamID(PLAYER)
+	
+	SRR_CHAR_INFO(PLAYER, STEAMID)
+end)
 
 -------------------------------
 --- */* SCRIPT COMMANDS */* ---
 -------------------------------
 
--- Character Part
+-- Character Part (/char(acter) command)
 RegisterCommand("character", function(source, args, rawCommand)
 	local PLAYER = source
 	local STEAMID = GetSteamID(PLAYER)
 	--
-	
+	TriggerClientEvent("CORE_FIX:CLOSE_1", PLAYER)
+	--
 	if args[1] == nil then
 		SRR_CHAR_INFO(PLAYER, STEAMID)
 	elseif args[1] == "create" then
@@ -58,17 +46,53 @@ RegisterCommand("character", function(source, args, rawCommand)
 			Citizen.Wait(1) 
 			SRR_CHAR_CREATE(PLAYER, STEAMID, args[2], args[3], args[4], args[5])
 			TriggerClientEvent("SRR_CHAR:s_Notify", PLAYER, "" .. mdt.Server_Color .. "CHAR: ~w~"..args[2].." "..args[3].." Was created successfully")
+			--
+			SRR_CHAR_INFO(PLAYER, STEAMID)
+			--
 		else
 			if mdt.Server_Licenses == true then
-				TriggerClientEvent('SRR_CHAR:HomePage', USER, mdt.Server_Color .. mdt.Server_Name .. "~w~ | CHARACTERS", "~w~Here you can find some useful information and settings about your ingame charcter(s).", "~w~Here is a small guide on how to use the char system.", "", "" .. mdt.Server_Color .. "CHARACTER COMMANDS:", "~c~/character create Firstname Lastname DD/MM/YYYY Gender ~w~to create an character", "~c~/character reset ~w~to reset your character(s)", "", "" .. mdt.Server_Color .. "MY CHARACTER:", "Firstname: ~c~"..firstname, "Lastname: ~c~"..lastname, "DOB: ~c~"..dob, "Gender: ~c~"..gender, "Driver's License: ~c~"..tostring(driverlicense), "Commercial Driver's License: ~c~"..tostring(commercialdriverlicense), "Driver's License Points: ~c~"..driverlicensepoints, "Pilot License(~y~IN-DEV~w~): ~c~"..tostring(boatinglicense), "Firearm's License: ~c~"..tostring(firearmlicense))
+				TriggerClientEvent('SRR_CHAR:HomePage', USER, mdt.Server_Color .. mdt.Server_Name .. "~w~ | CHARACTERS", "~c~Here you can find some useful information and settings about your ingame charcter(s).", "~c~Here is a small guide on how to use the char system.", "", "" .. mdt.Server_Color .. "CHARACTER COMMANDS:", "~c~/char(acter) create Firstname Lastname DD/MM/YYYY Gender ~w~to create an character", "~c~/char(acter) reset ~w~to reset your character(s)", "", "" .. mdt.Server_Color .. "MY CHARACTER:", "Firstname: ~c~"..firstname, "Lastname: ~c~"..lastname, "DOB: ~c~"..dob, "Gender: ~c~"..gender, "Driver's License: ~c~"..tostring(driverlicense), "Commercial Driver's License: ~c~"..tostring(commercialdriverlicense), "Driver's License Points: ~c~"..driverlicensepoints, "Pilot License: ~c~"..tostring(boatinglicense), "Firearm's License: ~c~"..tostring(firearmlicense))
 			else
-				TriggerClientEvent('SRR_CHAR:HomePage', USER, mdt.Server_Color .. mdt.Server_Name .. "~w~ | CHARACTERS", "~w~Here you can find some useful information and settings about your ingame charcter(s).", "~w~Here is a small guide on how to use the char system.", "", "" .. mdt.Server_Color .. "CHARACTER COMMANDS:", "~c~/character create Firstname Lastname DD/MM/YYYY Gender ~w~to create an character", "~c~/character reset ~w~to reset your character(s)", "", "" .. mdt.Server_Color .. "MY CHARACTER:", "Firstname: ~c~"..firstname, "Lastname: ~c~"..lastname, "DOB: ~c~"..dob, "Gender: ~c~"..gender, "Driver's License Points: ~c~"..driverlicensepoints, "", "", "", "" , "", false)
+				TriggerClientEvent('SRR_CHAR:HomePage', USER, mdt.Server_Color .. mdt.Server_Name .. "~w~ | CHARACTERS", "~c~Here you can find some useful information and settings about your ingame charcter(s).", "~c~Here is a small guide on how to use the char system.", "", "" .. mdt.Server_Color .. "CHARACTER COMMANDS:", "~c~/char(acter) create Firstname Lastname DD/MM/YYYY Gender ~w~to create an character", "~c~/char(acter) reset ~w~to reset your character(s)", "", "" .. mdt.Server_Color .. "MY CHARACTER:", "Firstname: ~c~"..firstname, "Lastname: ~c~"..lastname, "DOB: ~c~"..dob, "Gender: ~c~"..gender, "Driver's License Points: ~c~"..driverlicensepoints, "", "", "", "" , "", false)
 			end
 		end
 	elseif args[1] == "reset" then
 		SRR_CHAR_RESET(PLAYER, STEAMID)
 	end
 end, false)
+
+-- Character Part (/char command)
+RegisterCommand("char", function(source, args, rawCommand)
+	local PLAYER = source
+	local STEAMID = GetSteamID(PLAYER)
+	--
+	TriggerClientEvent("CORE_FIX:CLOSE_1", PLAYER)
+	--
+	if args[1] == nil then
+		SRR_CHAR_INFO(PLAYER, STEAMID)
+	elseif args[1] == "create" then
+		if args[5] == nil or args[6] then
+			TriggerClientEvent('chatMessage', PLAYER, "^1[CMD_INP_ERR] Wrong syntax for command", {255, 255, 255})
+		elseif not nil then
+			SRR_CHAR_RESET(PLAYER, STEAMID)
+			Citizen.Wait(1) 
+			SRR_CHAR_CREATE(PLAYER, STEAMID, args[2], args[3], args[4], args[5])
+			TriggerClientEvent("SRR_CHAR:s_Notify", PLAYER, "" .. mdt.Server_Color .. "CHAR: ~w~"..args[2].." "..args[3].." Was created successfully")
+			--
+			SRR_CHAR_INFO(PLAYER, STEAMID)
+			--
+		else
+			if mdt.Server_Licenses == true then
+				TriggerClientEvent('SRR_CHAR:HomePage', USER, mdt.Server_Color .. mdt.Server_Name .. "~w~ | CHARACTERS", "~c~Here you can find some useful information and settings about your ingame charcter(s).", "~c~Here is a small guide on how to use the char system.", "", "" .. mdt.Server_Color .. "CHARACTER COMMANDS:", "~c~/char(acter) create Firstname Lastname DD/MM/YYYY Gender ~w~to create an character", "~c~/char(acter) reset ~w~to reset your character(s)", "", "" .. mdt.Server_Color .. "MY CHARACTER:", "Firstname: ~c~"..firstname, "Lastname: ~c~"..lastname, "DOB: ~c~"..dob, "Gender: ~c~"..gender, "Driver's License: ~c~"..tostring(driverlicense), "Commercial Driver's License: ~c~"..tostring(commercialdriverlicense), "Driver's License Points: ~c~"..driverlicensepoints, "Pilot License: ~c~"..tostring(boatinglicense), "Firearm's License: ~c~"..tostring(firearmlicense))
+			else
+				TriggerClientEvent('SRR_CHAR:HomePage', USER, mdt.Server_Color .. mdt.Server_Name .. "~w~ | CHARACTERS", "~c~Here you can find some useful information and settings about your ingame charcter(s).", "~c~Here is a small guide on how to use the char system.", "", "" .. mdt.Server_Color .. "CHARACTER COMMANDS:", "~c~/char(acter) create Firstname Lastname DD/MM/YYYY Gender ~w~to create an character", "~c~/char(acter) reset ~w~to reset your character(s)", "", "" .. mdt.Server_Color .. "MY CHARACTER:", "Firstname: ~c~"..firstname, "Lastname: ~c~"..lastname, "DOB: ~c~"..dob, "Gender: ~c~"..gender, "Driver's License Points: ~c~"..driverlicensepoints, "", "", "", "" , "", false)
+			end
+		end
+	elseif args[1] == "reset" then
+		SRR_CHAR_RESET(PLAYER, STEAMID)
+	end
+end, false)
+
 --------------------------------
 --- */* SCRIPT FUNCTIONS */* ---
 --------------------------------
@@ -105,13 +129,13 @@ function SRR_CHAR_INFO(USER, ID)
 					end
 					--
 					if mdt.Server_Licenses == true then
-						TriggerClientEvent('SRR_CHAR:HomePage', USER, mdt.Server_Color .. mdt.Server_Name .. "~w~ | CHARACTERS", "~w~Here you can find some useful information and settings about your ingame charcter(s).", "~w~Here is a small guide on how to use the char system.", "", "" .. mdt.Server_Color .. "CHARACTER COMMANDS:", "~c~/character create Firstname Lastname DD/MM/YYYY Gender ~w~to create an character", "~c~/character reset ~w~to reset your character(s)", "", "" .. mdt.Server_Color .. "MY CHARACTER:", "Firstname: ~c~"..firstname, "Lastname: ~c~"..lastname, "DOB: ~c~"..dob, "Gender: ~c~"..gender, "Driver's License: ~c~"..tostring(driverlicense), "Commercial Driver's License: ~c~"..tostring(commercialdriverlicense), "Driver's License Points: ~c~"..driverlicensepoints, "Pilot License(~y~IN-DEV~w~): ~c~"..tostring(boatinglicense), "Firearm's License: ~c~"..tostring(firearmlicense))
+						TriggerClientEvent('SRR_CHAR:HomePage', USER, mdt.Server_Color .. mdt.Server_Name .. "~w~ | CHARACTERS", "~c~Here you can find some useful information and settings about your ingame charcter(s).", "~c~Here is a small guide on how to use the char system.", "", "" .. mdt.Server_Color .. "CHARACTER COMMANDS:", "~c~/char(acter) create Firstname Lastname DD/MM/YYYY Gender ~w~to create an character", "~c~/char(acter) reset ~w~to reset your character(s)", "", "" .. mdt.Server_Color .. "MY CHARACTER:", "Firstname: ~c~"..firstname, "Lastname: ~c~"..lastname, "DOB: ~c~"..dob, "Gender: ~c~"..gender, "Driver's License: ~c~"..tostring(driverlicense), "Commercial Driver's License: ~c~"..tostring(commercialdriverlicense), "Driver's License Points: ~c~"..driverlicensepoints, "Pilot License: ~c~"..tostring(boatinglicense), "Firearm's License: ~c~"..tostring(firearmlicense))
 					else
-						TriggerClientEvent('SRR_CHAR:HomePage', USER, mdt.Server_Color .. mdt.Server_Name .. "~w~ | CHARACTERS", "~w~Here you can find some useful information and settings about your ingame charcter(s).", "~w~Here is a small guide on how to use the char system.", "", "" .. mdt.Server_Color .. "CHARACTER COMMANDS:", "~c~/character create Firstname Lastname DD/MM/YYYY Gender ~w~to create an character", "~c~/character reset ~w~to reset your character(s)", "", "" .. mdt.Server_Color .. "MY CHARACTER:", "Firstname: ~c~"..firstname, "Lastname: ~c~"..lastname, "DOB: ~c~"..dob, "Gender: ~c~"..gender, "Driver's License Points: ~c~"..driverlicensepoints, "", "", "", "" , "", false)
+						TriggerClientEvent('SRR_CHAR:HomePage', USER, mdt.Server_Color .. mdt.Server_Name .. "~w~ | CHARACTERS", "~c~Here you can find some useful information and settings about your ingame charcter(s).", "~c~Here is a small guide on how to use the char system.", "", "" .. mdt.Server_Color .. "CHARACTER COMMANDS:", "~c~/char(acter) create Firstname Lastname DD/MM/YYYY Gender ~w~to create an character", "~c~/char(acter) reset ~w~to reset your character(s)", "", "" .. mdt.Server_Color .. "MY CHARACTER:", "Firstname: ~c~"..firstname, "Lastname: ~c~"..lastname, "DOB: ~c~"..dob, "Gender: ~c~"..gender, "Driver's License Points: ~c~"..driverlicensepoints, "", "", "", "" , "", false)
 					end
 					end
 			elseif (#CharacterInfo == 0 ) then
-				TriggerClientEvent('SRR_CHAR:HomePage', USER, mdt.Server_Color .. mdt.Server_Name .. "~w~ | CHARACTERS", "~w~Here you can find some useful information and settings about your ingame charcter(s).", "~w~Here is a small guide on how to use the char system.", "", "" .. mdt.Server_Color .. "CHARACTER COMMANDS:", "~c~/character create Firstname Lastname DD/MM/YYYY Gender ~w~to create an character", "~c~/character reset ~w~to reset your character(s)", "", "~r~*/* IMPORTANT NOTE */*", "Please create an character to be avail to RP properly", "", "", "", "", "", "", "", "", "", false)
+				TriggerClientEvent('SRR_CHAR:HomePage', USER, mdt.Server_Color .. mdt.Server_Name .. "~w~ | CHARACTERS", "~c~Here you can find some useful information and settings about your ingame charcter(s).", "~c~Here is a small guide on how to use the char system.", "", "" .. mdt.Server_Color .. "CHARACTER COMMANDS:", "~c~/char(acter) create Firstname Lastname DD/MM/YYYY Gender ~w~to create an character", "~c~/char(acter) reset ~w~to reset your character(s)", "", "~r~*/* IMPORTANT NOTE */*", "Please create an character to be avail to RP properly", "", "", "", "", "", "", "", "", "", false)
 		end
     end);
 end
@@ -141,13 +165,13 @@ AddEventHandler('MDT_SKIP_EVENT:SHOW_CHAR_INFO', function()
 					end
 					--
 					if mdt.Server_Licenses == true then
-						TriggerClientEvent('SRR_CHAR:HomePage', USER, mdt.Server_Color .. mdt.Server_Name .. "~w~ | CHARACTERS", "~w~Here you can find some useful information and settings about your ingame charcter(s).", "~w~Here is a small guide on how to use the char system.", "", "" .. mdt.Server_Color .. "CHARACTER COMMANDS:", "~c~/character create Firstname Lastname DD/MM/YYYY Gender ~w~to create an character", "~c~/character reset ~w~to reset your character(s)", "", "" .. mdt.Server_Color .. "MY CHARACTER:", "Firstname: ~c~"..firstname, "Lastname: ~c~"..lastname, "DOB: ~c~"..dob, "Gender: ~c~"..gender, "Driver's License: ~c~"..tostring(driverlicense), "Commercial Driver's License: ~c~"..tostring(commercialdriverlicense), "Driver's License Points: ~c~"..driverlicensepoints, "Pilot License(~y~IN-DEV~w~): ~c~"..tostring(boatinglicense), "Firearm's License: ~c~"..tostring(firearmlicense))
+						TriggerClientEvent('SRR_CHAR:HomePage', USER, mdt.Server_Color .. mdt.Server_Name .. "~w~ | CHARACTERS", "~c~Here you can find some useful information and settings about your ingame charcter(s).", "~c~Here is a small guide on how to use the char system.", "", "" .. mdt.Server_Color .. "CHARACTER COMMANDS:", "~c~/char(acter) create Firstname Lastname DD/MM/YYYY Gender ~w~to create an character", "~c~/char(acter) reset ~w~to reset your character(s)", "", "" .. mdt.Server_Color .. "MY CHARACTER:", "Firstname: ~c~"..firstname, "Lastname: ~c~"..lastname, "DOB: ~c~"..dob, "Gender: ~c~"..gender, "Driver's License: ~c~"..tostring(driverlicense), "Commercial Driver's License: ~c~"..tostring(commercialdriverlicense), "Driver's License Points: ~c~"..driverlicensepoints, "Pilot License: ~c~"..tostring(boatinglicense), "Firearm's License: ~c~"..tostring(firearmlicense))
 					else
-						TriggerClientEvent('SRR_CHAR:HomePage', USER, mdt.Server_Color .. mdt.Server_Name .. "~w~ | CHARACTERS", "~w~Here you can find some useful information and settings about your ingame charcter(s).", "~w~Here is a small guide on how to use the char system.", "", "" .. mdt.Server_Color .. "CHARACTER COMMANDS:", "~c~/character create Firstname Lastname DD/MM/YYYY Gender ~w~to create an character", "~c~/character reset ~w~to reset your character(s)", "", "" .. mdt.Server_Color .. "MY CHARACTER:", "Firstname: ~c~"..firstname, "Lastname: ~c~"..lastname, "DOB: ~c~"..dob, "Gender: ~c~"..gender, "Driver's License Points: ~c~"..driverlicensepoints, "", "", "", "" , "", false)
+						TriggerClientEvent('SRR_CHAR:HomePage', USER, mdt.Server_Color .. mdt.Server_Name .. "~w~ | CHARACTERS", "~c~Here you can find some useful information and settings about your ingame charcter(s).", "~c~Here is a small guide on how to use the char system.", "", "" .. mdt.Server_Color .. "CHARACTER COMMANDS:", "~c~/char(acter) create Firstname Lastname DD/MM/YYYY Gender ~w~to create an character", "~c~/char(acter) reset ~w~to reset your character(s)", "", "" .. mdt.Server_Color .. "MY CHARACTER:", "Firstname: ~c~"..firstname, "Lastname: ~c~"..lastname, "DOB: ~c~"..dob, "Gender: ~c~"..gender, "Driver's License Points: ~c~"..driverlicensepoints, "", "", "", "" , "", false)
 					end
 					end
 			elseif (#CharacterInfo == 0 ) then
-				TriggerClientEvent('SRR_CHAR:HomePage', PLAYER, mdt.Server_Color .. mdt.Server_Name .. "~w~ | MY CHARACTER", "~w~Here you can find some useful information and settings about your ingame charcter(s).", "~w~Here is a small guide on how to use the char system.", "", "" .. mdt.Server_Color .. "CHARACTER COMMANDS:", "~c~/character create Firstname Lastname DD/MM/YYYY Gender ~w~to create an character", "~c~/character reset ~w~to reset your character(s)", "", "~r~*/* IMPORTANT NOTE */*", "Please create an character to be avail to RP properly", "", "", "", "", "", "", "", "", "", false)
+				TriggerClientEvent('SRR_CHAR:HomePage', PLAYER, mdt.Server_Color .. mdt.Server_Name .. "~w~ | MY CHARACTER", "~c~Here you can find some useful information and settings about your ingame charcter(s).", "~c~Here is a small guide on how to use the char system.", "", "" .. mdt.Server_Color .. "CHARACTER COMMANDS:", "~c~/char(acter) create Firstname Lastname DD/MM/YYYY Gender ~w~to create an character", "~c~/char(acter) reset ~w~to reset your character(s)", "", "~r~*/* IMPORTANT NOTE */*", "Please create an character to be avail to RP properly", "", "", "", "", "", "", "", "", "", false)
 		end
     end);
 end)

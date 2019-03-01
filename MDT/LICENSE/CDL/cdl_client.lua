@@ -11,9 +11,11 @@
 ---- CLAIM THIS SCRIPT(BASE) AS YOURS.    ----
 ----------------------------------------------
 -- *CC* Valdemar Hägglund
-----------------------
---- BASE VARIABLES ---
-----------------------
+
+
+---------------------------------
+--- */* LOCAL FILE CONFIG */* ---
+---------------------------------
 
 -- +/+ DMV Main +/+ --
 local dmvschool_location = {-320.51, -1390.1, 36.5}
@@ -26,15 +28,15 @@ local dmvpedpos = {
 }
 
 -- +/+ Main Arrays +/+ --
-c_maxc_Errors = 20 -- Change the amount of c_Errors allowed for the player to pass the driver test, any number above this will result in a failed test
-c_c_onTestEvent = 0
-c_theorylock = 0
-c_onTtest = 0
-c_testblock = 0
-c_DamageControl = 0
-c_SpeedControl = 0
-c_CruiseControl = 0
-c_Error = 0
+local c_maxc_Errors = 20 -- Change the amount of c_Errors allowed for the player to pass the driver test, any number above this will result in a failed test
+local c_c_onTestEvent = 0
+local c_theorylock = 0
+local c_onTtest = 0
+local c_testblock = 0
+local c_DamageControl = 0
+local c_SpeedControl = 0
+local c_CruiseControl = 0
+local c_Error = 0
 
 -- +/+ Speed Vars +/+ --
 local kmh = 3.6
@@ -459,7 +461,6 @@ end
 end)
 
 -- Get current vehicle ped is in function
-dripdrip = "~m~Author: Alpha#5199"
 function GetCar() 
 	return GetVehiclePedIsIn(GetPlayerPed(-1),false) 
 end

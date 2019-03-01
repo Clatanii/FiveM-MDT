@@ -60,6 +60,22 @@ Citizen.CreateThread(function()
 	end
 end)
 
+-- Create blip (Pilot License)
+local pschool_location = {-1153.68, -2715.58, 19.89}
+Citizen.CreateThread(function()
+	if mdt.Server_Licenses == true then
+		local pos = pschool_location
+		local blip = AddBlipForCoord(pos[1],pos[2],pos[3])
+		SetBlipSprite(blip,90)
+		SetBlipColour(blip,50)
+		BeginTextCommandSetBlipName("STRING")
+		AddTextComponentString('Pilot School')
+		EndTextCommandSetBlipName(blip)
+		SetBlipAsShortRange(blip,true)
+		SetBlipAsMissionCreatorBlip(blip,true)
+	end
+end)
+
 -- Create blip (RESET LICENSE)
 local resetpoints_location = {233.25, -410.27, 49.11}
 Citizen.CreateThread(function()

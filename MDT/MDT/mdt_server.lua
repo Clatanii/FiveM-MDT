@@ -27,9 +27,11 @@ RegisterCommand("mdt", function(source, args, rawCommand)
 	local PLAYER = source
 	local STEAMID = GetSteamID(PLAYER)
 	--
+	TriggerClientEvent("CORE_FIX:CLOSE_2", PLAYER)
+	--
 	if args[1] == nil then
 		TriggerClientEvent("SRR_CHAR:MDT_CLOSE_ARRAY", source)
-		TriggerClientEvent("SRR_CHAR:HomePage_MDT", source, mdt.Server_Color .. mdt.Server_Name .. " ~w~| MOBILE DATA TERMINAL", "~c~This Mobile Device is owned by the San Andreas Goverment 2018 & 2019 - CC("..mdt.Server_Name..")", "", "" .. mdt.Server_Color .. "ISSUES & BUGS:", "~c~For any issues or/and bugs with the MDT system, report in our discord.", "", "" .. mdt.Server_Color .. "MDT COMMANDS & CONTROLS:", "~c~All the following commands are to be used after /mdt", "~w~warcheck (ID), chacheck (ID), placheck (PLATE), bolcheck, idcheck (ID), addp (ID) (POINTS)", "~w~addwar (ID) (WARRENT), addcha (ID) (CHARGE), flag stolen (PLATE) (0/1), addbolo (BOLO)", "~w~clearwar (ID) (WARRENT), clearcha (ID) (CHARGE), delplate (PLATE), clearbol", "", "" .. mdt.Server_Color .. "STATUS & PERSONAL MDT INFO:", "~c~Your status and personal info and/or notes. [/mdt addnote (NOTE)] to add a note.", "~w~PERSONAL NOTE: ~c~", "~w~MDT VERSION: ~c~", "~w~MDT NETWORK STATUS: ~g~")
+		TriggerClientEvent("SRR_CHAR:HomePage_MDT", source, mdt.Server_Color .. mdt.Server_Name .. " ~w~| MOBILE DATA TERMINAL", "~c~This Mobile Device is owned by the San Andreas Goverment 2018 & 2019 - CC("..mdt.Server_Name..")", "", "" .. mdt.Server_Color .. "ISSUES & BUGS:", "~c~For any issues or/and bugs with the MDT system, create an report on forums", "", "" .. mdt.Server_Color .. "MDT COMMANDS & CONTROLS:", "~c~All the following commands are to be used after /mdt", "~w~warcheck (ID), chacheck (ID), placheck (PLATE), bolcheck, idcheck (ID), addp (ID) (POINTS)", "~w~addwar (ID) (WARRENT), addcha (ID) (CHARGE), flag stolen (PLATE) (0/1), addbolo (BOLO)", "~w~clearwar (ID) (WARRENT), clearcha (ID) (CHARGE), delplate (PLATE), clearbol", "", "" .. mdt.Server_Color .. "STATUS & PERSONAL MDT INFO:", "~c~Your status and personal info and/or notes. [/mdt addnote (NOTE)] to add a note.", "~w~PERSONAL NOTE: ~c~", "~w~MDT VERSION: ~c~", "~w~MDT NETWORK STATUS: ~g~")
 	end
 	--
 	-- (MAIN PART)
@@ -196,7 +198,7 @@ RegisterCommand('flashid', function(source, args, rawCommand)
 				boatinglicense = CharacterInfo[i].b_license
 				firearmlicense = CharacterInfo[i].f_license
 				--
-				TriggerClientEvent("sendProximityMessage25Command", PLAYER, "^3"..GetPlayerName(PLAYER).." flashes ID (Name: "..firstname.." "..lastname..", DOB: "..dob..", Driver's License: "..tostring(driverlicense)..", C-Driver's License: "..tostring(commercialdriverlicense)..", Firearm License: "..tostring(firearmlicense)..")")
+				TriggerClientEvent("sendProximityMessage25Command", -1, PLAYER, "^3"..GetPlayerName(PLAYER).." flashes ID (Name: "..firstname.." "..lastname..", DOB: "..dob..", Driver's License: "..tostring(driverlicense)..", C-Driver's License: "..tostring(commercialdriverlicense)..", Firearm License: "..tostring(firearmlicense)..", Pilot License: "..tostring(boatinglicense)..")")
 			end
 		elseif (#CharacterInfo == 0) then
 			TriggerClientEvent('chatMessage', PLAYER, "^1[CMD_LOD_ERR] Character not found", {255, 255, 255})
