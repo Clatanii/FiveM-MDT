@@ -128,10 +128,6 @@ function EndTestTasks()
 		SetEntityInvincible(GetPlayerPed(-1), false)
 end
 
-RegisterCommand("lol", function(source, args, raw)
-	startptest_p()
-end)
-
 -- Start introduction of DMV school
 function Course1()
 	local myPed = GetPlayerPed(-1)
@@ -584,7 +580,7 @@ Citizen.CreateThread(function()
 		end
 	end	
 	
-	if GetVehicleEngineHealth(GetVehiclePedIsIn(GetPlayerPed(-1),false)) <= 0 then
+	if GetVehicleEngineHealth(GetVehiclePedIsIn(GetPlayerPed(-1),false)) <= 0 and onTestEvent >= 3 and onTestEvent <= 12 then
 		if onTestBlipp_p ~= nil and DoesBlipExist(onTestBlipp_p) then
 			Citizen.InvokeNative(0x86A652570E5F25DD,Citizen.PointerValueIntInitialized(onTestBlipp_p))
 		end

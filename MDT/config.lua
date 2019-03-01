@@ -37,7 +37,7 @@ mdt = {
 	-- */* WHEN PUTTING OUT WARRANT SHOW AN NOTICE TO THE PLAYER */*
 	Server_Show_War = true, -- (Valid Options: true or false)
 	-- */* BRING UP CHARACTER INFO WHEN SPAWNING IN */*
-	Server_Char_At_Join = false, -- (Valid Options: true or false)
+	Server_Char_At_Join = true, -- (Valid Options: true or false)
 	
 	-- -- -- -- -- -- --
 	-- */* ADDONS */* --
