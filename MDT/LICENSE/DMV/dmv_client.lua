@@ -71,7 +71,7 @@ Citizen.CreateThread(function()
 			if(Vdist(239.09, -1381.57, 33.74, pos.x, pos.y, pos.z) < 1.0)then
 			DisplayHelpText("~o~DMV: ~w~Press *E* to start the DMV course")
 				if(IsControlJustReleased(1, 38)) then																			
-					ShowBoxMain("~o~DMV-SA ~w~| INTRODUCTION", "~w~Welcome to the Department Of Motor Vehicles, We are here", "~w~to help you get your driver's license today, But before that", "you will need to have a basic understanding of how the", "traffic works and how to be a good driver in general.", "", "~o~Driver's License Requirements:", "  ~w~* Filled 18 years old or more", "  ~w~* Pay Driver License Fees", "  ~w~* Good Eye-Vision", "  ~w~* Have a San-Andreas ID card", "", "~w~If you want to continue and start the actual course please", "~w~press ~g~(Y)~w~. Otherwise you can close this page and you will", "not be charged for anything. Have a great day!")
+					ShowBoxMain("~o~DMV-SA ~w~| INTRODUCTION", "~w~Welcome to the Department Of Motor Vehicles, We are here", "~w~to help you get your driver's license today, But before that", "you will need to have a basic understanding of how the", "traffic works and how to be a good driver in general.", "", "~o~Driver's License Requirements:", "  ~w~* Filled 16 years old or more", "  ~w~* Pay Driver License Fees", "  ~w~* Good Eye-Vision", "  ~w~* Have a San-Andreas ID card", "", "~w~If you want to continue and start the actual course please", "~w~press ~g~(Y)~w~. Otherwise you can close this page and you will", "not be charged for anything. Have a great day!")
 					end
 				if(IsControlJustPressed(0, 246)) then
 					showmyinfo = false

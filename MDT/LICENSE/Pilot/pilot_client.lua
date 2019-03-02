@@ -125,9 +125,6 @@ function p_EndTestTasks()
 		--
 		SetEntityCoords(GetPlayerPed(-1),-1152.56, -2713.52, 19.89, true, false, false,true)
 		--
-		if mdt.Server_GodMode_Feature == true then
-			SetEntityInvincible(GetPlayerPed(-1), true)
-		end
 end
 
 -- Start introduction of DMV school
@@ -216,7 +213,6 @@ function p_SpawnTestCar_p()
 	dmvped = CreatePedInsideVehicle(veh, 4, dhash, 0, true, true)
 	SetPedCanBeDraggedOut(dmvped, true)
 	SetPedStayInVehicleWhenJacked(dmvped, true)
-	SetEntityInvincible(dmvped, true)
 	SetBlockingOfNonTemporaryEvents(dmvped, true)
 	--
 	DTutOpen = false
@@ -377,9 +373,6 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0)
 		if onTestEvent >= 1 and onTestEvent <= 15 then
-			if mdt.Server_GodMode_Feature == true then
-				SetEntityInvincible(GetPlayerPed(-1), true)
-			end
 		end
         local veh = GetVehiclePedIsUsing(GetPlayerPed(-1))
 		local ped = GetPlayerPed(-1)
