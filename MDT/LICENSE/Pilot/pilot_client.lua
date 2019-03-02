@@ -53,7 +53,7 @@ local speed = kmh
 -- Event to start function Course1()
 RegisterNetEvent('SRR_CHAR_DMV:StartCourse1_P')
 AddEventHandler('SRR_CHAR_DMV:StartCourse1_P', function()
-	Course1()
+	p_Course1()
 end)
 
 ---------------------------------
@@ -89,7 +89,7 @@ end)
 --------------------------------
 
 -- Start driving test
-function startptest_p()
+function p_startptest_p()
 	onTestBlipp_p = AddBlipForCoord(-1217.71, -3325.79, 13.94)
 	N_0x80ead8e2e1d5d52e(onTestBlipp_p)
 	SetBlipRoute(onTestBlipp_p, 1)
@@ -97,11 +97,11 @@ function startptest_p()
 	DamageControl = 1
 	SpeedControl = 1
 	onTtest = 3
-	SpawnTestCar_p()
+	p_SpawnTestCar_p()
 end
 
 -- End test
-function EndTestTasks()
+function p_EndTestTasks()
 		onTestBlipp_p = nil
 		onTestEvent = 17
 		theorylock = 0
@@ -129,7 +129,7 @@ function EndTestTasks()
 end
 
 -- Start introduction of DMV school
-function Course1()
+function p_Course1()
 	local myPed = GetPlayerPed(-1)
 	DTutOpen = true
 	SetEntityCoords(myPed,-709.29, -3360.73, 152.28,true, false, false,true)
@@ -176,11 +176,11 @@ function Course1()
 	--
 	OnTestEvent = 1
     theorylock = 4
-	startptest_p()
+	p_startptest_p()
 end
 
 -- Spawn car and begin driving part
-function SpawnTestCar_p()
+function p_SpawnTestCar_p()
 	local hashVeh = GetHashKey("mammatus")
 	local dhash = GetHashKey('s_m_m_pilot_01')
 	local myPed = GetPlayerPed(-1)
@@ -230,13 +230,13 @@ function SpawnTestCar_p()
 end
 
 -- Give end results and stop everything
-function EndDTest()
+function p_EndDTest()
 	FreezeEntityPosition(GetVehiclePedIsUsing(GetPlayerPed(-1)), true)
 	ShowBoxMainPage("20","     ~p~PLC-SA ~w~| RESULTS", "Your piloting course is now finished, You are soon to know", "your final results. Remember, You can always come back", "another day and retry the test if you failed it.", "", "~p~RESULTS:", "  ~p~* ~w~Status: ~g~Passed", "", "Congratz! Now you have a legal San Andreas pilot license!")
 	TriggerServerEvent('CHAR_DMV:D_License_P_T')
 	Citizen.Wait(20000)
 	showmyinfo = false
-	EndTestTasks()
+	p_EndTestTasks()
 	FreezeEntityPosition(GetVehiclePedIsUsing(GetPlayerPed(-1)), false)
 	FreezeEntityPosition(GetPlayerPed(-1), false)
 end
@@ -576,7 +576,7 @@ Citizen.CreateThread(function()
 		    if onTestBlipp_p ~= nil and DoesBlipExist(onTestBlipp_p) then
 				Citizen.InvokeNative(0x86A652570E5F25DD,Citizen.PointerValueIntInitialized(onTestBlipp_p))
 		    end
-			EndDTest()
+			p_EndDTest()
 		end
 	end	
 	
@@ -585,7 +585,7 @@ Citizen.CreateThread(function()
 			Citizen.InvokeNative(0x86A652570E5F25DD,Citizen.PointerValueIntInitialized(onTestBlipp_p))
 		end
 		drawNotification("~p~PLC-SA: ~w~Your plane was ~r~destroyed~w~, Course canceled.")
-		EndTestTasks()
+		p_EndTestTasks()
 		FreezeEntityPosition(GetVehiclePedIsUsing(GetPlayerPed(-1)), false)
 		FreezeEntityPosition(GetPlayerPed(-1), false)
 	end
