@@ -29,7 +29,7 @@ local dmvpedpos = {
 
 -- +/+ Main Arrays +/+ --
 local maxErrors = 8 -- Change the amount of Errors allowed for the player to pass the driver test, any number above this will result in a failed test
-local onTestEvent = 2
+local onTestEvent = 0
 local theorylock = 0
 local onTtest = 0
 local testblock = 0
