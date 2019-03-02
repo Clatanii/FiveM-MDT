@@ -38,7 +38,8 @@ mdt = {
 	Server_Show_War = true, -- (Valid Options: true or false)
 	-- */* BRING UP CHARACTER INFO WHEN SPAWNING IN */*
 	Server_Char_At_Join = true, -- (Valid Options: true or false)
-	
+	-- */* WHILE DOING TRAINING TURN ON GODMODE, CAN CONFLICT WITH ANTI-GOD MODE ETC */*
+	Server_GodMode_Feature = true, -- (Valid Options: true or false)
 	-- -- -- -- -- -- --
 	-- */* ADDONS */* --
 	-- -- -- -- -- -- --

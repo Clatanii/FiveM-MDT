@@ -125,7 +125,9 @@ function p_EndTestTasks()
 		--
 		SetEntityCoords(GetPlayerPed(-1),-1152.56, -2713.52, 19.89, true, false, false,true)
 		--
-		SetEntityInvincible(GetPlayerPed(-1), false)
+		if mdt.Server_GodMode_Feature == true then
+			SetEntityInvincible(GetPlayerPed(-1), true)
+		end
 end
 
 -- Start introduction of DMV school
@@ -375,7 +377,9 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0)
 		if onTestEvent >= 1 and onTestEvent <= 15 then
-			SetEntityInvincible(GetPlayerPed(-1), true)
+			if mdt.Server_GodMode_Feature == true then
+				SetEntityInvincible(GetPlayerPed(-1), true)
+			end
 		end
         local veh = GetVehiclePedIsUsing(GetPlayerPed(-1))
 		local ped = GetPlayerPed(-1)
