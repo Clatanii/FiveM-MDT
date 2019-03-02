@@ -89,10 +89,6 @@ end)
 --- */* SCRIPT FUNCTIONS */* ---
 --------------------------------
 
-RegisterCommand("lol", function(source, args, raw)
-	startptest()
-end)
-
 -- Start driving test
 function startptest()
 	onTestBlipp = AddBlipForCoord(255.13990783691,-1400.7319335938,30.5374584198)
