@@ -221,7 +221,7 @@ RegisterServerEvent("MDT_SKIP_EVENT:POINT_ADD_2")
 AddEventHandler('MDT_SKIP_EVENT:POINT_ADD_2', function(player, points)
 	local steamID = GetSteamID(source)
 	local p_steamID = GetSteamID(player)
-	local PLAYER = source
+	local PLAYER_ = source
 	--
 	MySQL.Async.fetchAll("SELECT * FROM chars WHERE STEAMID = @STEAMID", {["@STEAMID"] = p_steamID}, function(CharacterInfo)
 		if (#CharacterInfo >= 1) then
@@ -231,7 +231,9 @@ AddEventHandler('MDT_SKIP_EVENT:POINT_ADD_2', function(player, points)
 				--
 				MySQL.Async.execute("UPDATE chars SET license_p=@LICENSEP WHERE STEAMID = @STEAMID", {["@STEAMID"] = p_steamID, ['@LICENSEP'] = add_p})
 				--
-				TriggerClientEvent("SRR_CHAR:s_Notify", PLAYER, "" .. mdt.Server_Color .. "MDT~w~: You gave "..GetPlayerName(player).." "..points.." points")
+				TriggerClientEvent("SRR_CHAR:s_Notify", PLAYER_, "" .. mdt.Server_Color .. "MDT~w~: You gave "..GetPlayerName(player).." "..points.." points")
+				--
+				TriggerClientEvent("SRR_CHAR:s_Notify", player, "" .. mdt.Server_Color .. "POINTS~w~: You have been given "..points.." points by: ~y~"..GetPlayerName(PLAYER_))
 			end
 		end
 	end);
