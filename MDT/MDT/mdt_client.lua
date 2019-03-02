@@ -81,7 +81,7 @@ RegisterNetEvent('MDT_SQL_VEHICLE_NOTE_REG')
 AddEventHandler('MDT_SQL_VEHICLE_NOTE_REG', function(vehicleplate)
 	SetNotificationTextEntry("STRING")
 	AddTextComponentSubstringPlayerName("~w~This Vehicle has now been registered to your name.")
-	SetNotificationMessage("CHAR_PEGASUS_DELIVERY", "CHAR_PEGASUS_DELIVERY", true, 4, "SRR - VREG", "" .. mdt.Server_Color .. "Plate:~w~ "..vehicleplate)
+	SetNotificationMessage("CHAR_PEGASUS_DELIVERY", "CHAR_PEGASUS_DELIVERY", true, 4, mdt.Server_Name.." - VREG", "" .. mdt.Server_Color .. "Plate:~w~ "..vehicleplate)
 	DrawNotification(false, true);
 end)
 
