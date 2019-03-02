@@ -29,7 +29,7 @@ local dmvpedpos = {
 
 -- +/+ Main Arrays +/+ --
 local c_maxc_Errors = 20 -- Change the amount of c_Errors allowed for the player to pass the driver test, any number above this will result in a failed test
-local c_c_onTestEvent = 0
+local c_onTestEvent = 0
 local c_theorylock = 0
 local c_onTtest = 0
 local c_testblock = 0
@@ -37,6 +37,8 @@ local c_DamageControl = 0
 local c_SpeedControl = 0
 local c_CruiseControl = 0
 local c_Error = 0
+local truck
+local bus
 
 -- +/+ Speed Vars +/+ --
 local kmh = 3.6
@@ -98,24 +100,26 @@ function c_startptest()
 end
 
 function EndTestTasks_CDL()
-		c_onTestBlipp = nil
-		c_onTestEvent = 17
-		Citizen.Wait(100)
-		c_onTestEvent = 0
-		c_DamageControl = 0
-		c_SpeedControl = 0
-		c_Error = 0
-		TaskLeaveVehicle(GetPlayerPed(-1), veh, 0)
-		DeleteEntity(bus)
-		DeletePed(dped)
-		--
-		CarTargetForLock = GetPlayersLastVehicle(GetPlayerPed(-1))
-		lockStatus = GetVehicleDoorLockStatus(CarTargetForLock)
-		SetVehicleDoorsLocked(CarTargetForLock, 2)
-		SetVehicleDoorsLockedForPlayer(CarTargetForLock, PlayerId(), false)
-		SetEntityAsMissionEntity(CarTargetForLock, true, true)
-		Citizen.InvokeNative( 0xEA386986E786A54F, Citizen.PointerValueIntInitialized( CarTargetForLock ) )
-		FreezeEntityPosition(GetPlayerPed(-1), false)		
+	c_onTestBlipp = nil
+	c_onTestEvent = 17
+	Citizen.Wait(100)
+	c_onTestEvent = 0
+	c_DamageControl = 0
+	c_SpeedControl = 0
+	c_Error = 0
+	TaskLeaveVehicle(GetPlayerPed(-1), veh, 0)
+	DeleteEntity(bus)
+	DeletePed(dped)
+	--
+	CarTargetForLock = GetPlayersLastVehicle(GetPlayerPed(-1))
+	lockStatus = GetVehicleDoorLockStatus(CarTargetForLock)
+	SetVehicleDoorsLocked(CarTargetForLock, 2)
+	SetVehicleDoorsLockedForPlayer(CarTargetForLock, PlayerId(), false)
+	SetEntityAsMissionEntity(CarTargetForLock, true, true)
+	Citizen.InvokeNative( 0xEA386986E786A54F, Citizen.PointerValueIntInitialized( CarTargetForLock ) )
+	FreezeEntityPosition(GetPlayerPed(-1), false)	
+	--
+	SetEntityCoords(GetPlayerPed(-1), -320.52, -1393.32, 36.50,true, false, false,true)
 end
 
 function Course1_cdl()
@@ -242,7 +246,7 @@ function EndDTest_CDL()
 			ShowBoxMainPage("~b~20","     ~b~CDL-SA ~w~| RESULTS", "Your driving course is now finished, You are soon to know", "your final results. Remember, You can always come back", "another day and retry the test if you failed it.", "", "~b~RESULTS:", "  ~b~* ~w~Status: ~r~Failed", "  ~b~* ~w~Error Points: "..c_Error.." / 20", "", "You can come back another day if you want to retry the test!")
 			Citizen.Wait(20000)
 			showmyinfo = false
-			EndTestTasks()
+			EndTestTasks_CDL()
 			FreezeEntityPosition(GetVehiclePedIsUsing(GetPlayerPed(-1)), false)
 			FreezeEntityPosition(GetPlayerPed(-1), false)
 		else
@@ -295,7 +299,7 @@ function SpawnNextSessionTruckCDL()
 		Citizen.Wait(0)
 	end
 							
-	local bus = CreateVehicle(hashtruck, -1896.42, 1991.41, 142.08, 7.4, true, false)
+	bus = CreateVehicle(hashtruck, -1896.42, 1991.41, 142.08, 7.4, true, false)
 
 	local plate = math.random(100, 900)
 	SetVehicleOnGroundProperly(bus)
@@ -374,7 +378,6 @@ Citizen.CreateThread(function()
 		    if c_onTestBlipp ~= nil and DoesBlipExist(c_onTestBlipp) then
 				Citizen.InvokeNative(0x86A652570E5F25DD,Citizen.PointerValueIntInitialized(c_onTestBlipp))
 		    end
-			print("hej")
 			c_onTestBlipp = AddBlipForCoord(-3084.58, 1183.23, 20.7)
 			N_0x80ead8e2e1d5d52e(c_onTestBlipp)
 			SetBlipRoute(c_onTestBlipp, 1)
@@ -457,6 +460,27 @@ Citizen.CreateThread(function()
 			EndDTest_CDL()
 		end
 	end	
+	
+	if DoesEntityExist(truck) == false and c_onTestEvent >= 1 and c_onTestEvent <= 3 then
+		if c_onTestBlipp ~= nil and DoesBlipExist(c_onTestBlipp) then
+			Citizen.InvokeNative(0x86A652570E5F25DD,Citizen.PointerValueIntInitialized(c_onTestBlipp))
+		end
+		drawNotification("~b~CDL-SA: ~w~Your truck was ~r~destroyed~w~, Course canceled.")
+		EndTestTasks_CDL()
+		FreezeEntityPosition(GetVehiclePedIsUsing(GetPlayerPed(-1)), false)
+		FreezeEntityPosition(GetPlayerPed(-1), false)
+	end
+	
+	if DoesEntityExist(bus) == false and c_onTestEvent >= 4 and c_onTestEvent <= 5 then
+		if c_onTestBlipp ~= nil and DoesBlipExist(c_onTestBlipp) then
+			Citizen.InvokeNative(0x86A652570E5F25DD,Citizen.PointerValueIntInitialized(c_onTestBlipp))
+		end
+		drawNotification("~b~CDL-SA: ~w~Your bus was ~r~destroyed~w~, Course canceled.")
+		EndTestTasks_CDL()
+		FreezeEntityPosition(GetVehiclePedIsUsing(GetPlayerPed(-1)), false)
+		FreezeEntityPosition(GetPlayerPed(-1), false)
+	end
+	
 end
 end)
 

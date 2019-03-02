@@ -38,13 +38,8 @@ local SpeedControl = 0
 local CruiseControl = 0
 local Error = 0
 
--- +/+ Speed Vars +/+ --
-local kmh = 3.6
-local VehSpeed = 0
-local speed_limit_resi = 85.0
-local speed_limit_town = 85.0
-local speed_limit_freeway = 103
-local speed = kmh
+-- +/+ Vehicle Releated +/+ --
+local veh
 
 -----------------------------
 --- */* SCRIPT EVENTS */* ---
@@ -125,6 +120,7 @@ function p_EndTestTasks()
 		--
 		SetEntityCoords(GetPlayerPed(-1),-1152.56, -2713.52, 19.89, true, false, false,true)
 		--
+		SetEntityInvincible(GetPlayerPed(-1), false)
 end
 
 -- Start introduction of DMV school
@@ -195,7 +191,7 @@ function p_SpawnTestCar_p()
 		Citizen.Wait(0)
 	end
 							
-	local veh = CreateVehicle(hashVeh, -1267.18, -3373.27, 14.06, 331.51, true, false)
+	veh = CreateVehicle(hashVeh, -1267.18, -3373.27, 14.06, 331.51, true, false)
 
 	local plate = math.random(100, 900)
 	SetVehicleOnGroundProperly(veh)
@@ -213,6 +209,7 @@ function p_SpawnTestCar_p()
 	dmvped = CreatePedInsideVehicle(veh, 4, dhash, 0, true, true)
 	SetPedCanBeDraggedOut(dmvped, true)
 	SetPedStayInVehicleWhenJacked(dmvped, true)
+	SetEntityInvincible(dmvped, true)
 	SetBlockingOfNonTemporaryEvents(dmvped, true)
 	--
 	DTutOpen = false
@@ -228,7 +225,7 @@ function p_SpawnTestCar_p()
 end
 
 -- Give end results and stop everything
-function p_EndDTest()
+function EndDTest()
 	FreezeEntityPosition(GetVehiclePedIsUsing(GetPlayerPed(-1)), true)
 	ShowBoxMainPage("20","     ~p~PLC-SA ~w~| RESULTS", "Your piloting course is now finished, You are soon to know", "your final results. Remember, You can always come back", "another day and retry the test if you failed it.", "", "~p~RESULTS:", "  ~p~* ~w~Status: ~g~Passed", "", "Congratz! Now you have a legal San Andreas pilot license!")
 	TriggerServerEvent('CHAR_DMV:D_License_P_T')
@@ -338,7 +335,7 @@ function ShowInfoblackboxPage(secs, head, text1, text2, text3, text4, text5, tex
 			drawTxt(1.127, 1.171, 1.0,1.0,0.48, text22, 255, 255, 255, 200)
 			drawTxt(1.127, 1.192, 1.0,1.0,0.48, text23, 255, 255, 255, 200)
 			--
-			drawTxt(1.155, 1.243, 1.0,1.0,0.45, "~c~P L E A S E  W A I T  ~p~"..secs.."  S E C S  ~c~T O  C O N T I N U E", 255, 255, 255, 200)
+			drawTxt(1.155, 1.243, 1.0,1.0,0.45, "~c~P L E A S E  W A I T  ~m~"..secs.."  S E C S  ~c~T O  C O N T I N U E", 255, 255, 255, 200)
 		end
 	end)
 end
@@ -373,6 +370,7 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0)
 		if onTestEvent >= 1 and onTestEvent <= 15 then
+			SetEntityInvincible(GetPlayerPed(-1), true)
 		end
         local veh = GetVehiclePedIsUsing(GetPlayerPed(-1))
 		local ped = GetPlayerPed(-1)
@@ -573,11 +571,21 @@ Citizen.CreateThread(function()
 		    if onTestBlipp_p ~= nil and DoesBlipExist(onTestBlipp_p) then
 				Citizen.InvokeNative(0x86A652570E5F25DD,Citizen.PointerValueIntInitialized(onTestBlipp_p))
 		    end
-			p_EndDTest()
+			EndDTest()
 		end
 	end	
 	
-	if GetVehicleEngineHealth(GetVehiclePedIsIn(GetPlayerPed(-1),false)) <= 0 and onTestEvent >= 3 and onTestEvent <= 12 then
+	if GetVehicleEngineHealth(veh) <= 0 and onTestEvent >= 1 and onTestEvent <= 12 then
+		if onTestBlipp_p ~= nil and DoesBlipExist(onTestBlipp_p) then
+			Citizen.InvokeNative(0x86A652570E5F25DD,Citizen.PointerValueIntInitialized(onTestBlipp_p))
+		end
+		drawNotification("~p~PLC-SA: ~w~Your plane was ~r~destroyed~w~, Course canceled.")
+		p_EndTestTasks()
+		FreezeEntityPosition(GetVehiclePedIsUsing(GetPlayerPed(-1)), false)
+		FreezeEntityPosition(GetPlayerPed(-1), false)
+	end
+	
+	if DoesEntityExist(veh) == false and onTestEvent >= 1 and onTestEvent <= 12 then
 		if onTestBlipp_p ~= nil and DoesBlipExist(onTestBlipp_p) then
 			Citizen.InvokeNative(0x86A652570E5F25DD,Citizen.PointerValueIntInitialized(onTestBlipp_p))
 		end

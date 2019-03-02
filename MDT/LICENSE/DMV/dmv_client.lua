@@ -20,6 +20,7 @@
 local dmvschool_location = {239.09, -1381.57, 33.74}
 local DMV_SA_LastPage = false
 showmyinfo = false
+local veh
 local dmvped = {
   {type=4, hash=0xc99f21c4, x=239.09, y=-1381.57, z=33.74, a=3374176},
 }
@@ -88,6 +89,10 @@ end)
 --- */* SCRIPT FUNCTIONS */* ---
 --------------------------------
 
+RegisterCommand("lol", function(source, args, raw)
+	startptest()
+end)
+
 -- Start driving test
 function startptest()
 	onTestBlipp = AddBlipForCoord(255.13990783691,-1400.7319335938,30.5374584198)
@@ -119,7 +124,9 @@ function EndTestTasks()
 		SetVehicleDoorsLockedForPlayer(CarTargetForLock, PlayerId(), false)
 		SetEntityAsMissionEntity(CarTargetForLock, true, true)
 		Citizen.InvokeNative( 0xEA386986E786A54F, Citizen.PointerValueIntInitialized( CarTargetForLock ) )
-		FreezeEntityPosition(GetPlayerPed(-1), false)		
+		FreezeEntityPosition(GetPlayerPed(-1), false)	
+		--
+		SetEntityCoords(GetPlayerPed(-1), 242.98, -1381.61, 33.74, true, false, false,true)
 end
 
 -- Start introduction of DMV school
@@ -185,7 +192,7 @@ function SpawnTestCar()
 		Citizen.Wait(0)
 	end
 							
-	local veh = CreateVehicle(hashVeh, 249.40971374512,-1407.2303466797,30.409454345703, 320.4, true, false)
+	veh = CreateVehicle(hashVeh, 249.40971374512,-1407.2303466797,30.409454345703, 320.4, true, false)
 
 	local plate = math.random(100, 900)
 	SetVehicleOnGroundProperly(veh)
@@ -664,6 +671,17 @@ Citizen.CreateThread(function()
 			EndDTest()
 		end
 	end		
+	
+	if DoesEntityExist(veh) == false and onTestEvent >= 1 and onTestEvent <= 16 then
+		if onTestBlipp ~= nil and DoesBlipExist(onTestBlipp) then
+			Citizen.InvokeNative(0x86A652570E5F25DD,Citizen.PointerValueIntInitialized(onTestBlipp))
+		end
+		drawNotification("~o~DMV-SA: ~w~Your car was ~r~destroyed~w~, Course canceled.")
+		EndTestTasks()
+		FreezeEntityPosition(GetVehiclePedIsUsing(GetPlayerPed(-1)), false)
+		FreezeEntityPosition(GetPlayerPed(-1), false)
+	end
+	
 end
 end)
 
