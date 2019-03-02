@@ -43,7 +43,7 @@ CHAR_MDT_NOTE = "NOT SET"
 -----------------------------
 
 -- Show character window on player join if turned on in config
-AddEventHandler("playerSpawned", function(source, spawn)
+AddEventHandler("onClientMapStart", function(source, spawn)
 	if mdt.Server_Char_At_Join == true then
 		TriggerServerEvent("CHAR:SHOW_AT_JOIN")
 	end
