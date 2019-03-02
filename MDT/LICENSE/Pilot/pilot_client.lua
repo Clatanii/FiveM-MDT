@@ -370,7 +370,9 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0)
 		if onTestEvent >= 1 and onTestEvent <= 15 then
-			SetEntityInvincible(GetPlayerPed(-1), true)
+			if mdt.Server_GodMode_Feature == true then
+				SetEntityInvincible(GetPlayerPed(-1), true)
+			end
 		end
         local veh = GetVehiclePedIsUsing(GetPlayerPed(-1))
 		local ped = GetPlayerPed(-1)
