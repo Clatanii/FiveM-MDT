@@ -225,7 +225,7 @@ function p_SpawnTestCar_p()
 end
 
 -- Give end results and stop everything
-function EndDTest()
+function EndDTest_p()
 	FreezeEntityPosition(GetVehiclePedIsUsing(GetPlayerPed(-1)), true)
 	ShowBoxMainPage("20","     ~p~PLC-SA ~w~| RESULTS", "Your piloting course is now finished, You are soon to know", "your final results. Remember, You can always come back", "another day and retry the test if you failed it.", "", "~p~RESULTS:", "  ~p~* ~w~Status: ~g~Passed", "", "Congratz! Now you have a legal San Andreas pilot license!")
 	TriggerServerEvent('CHAR_DMV:D_License_P_T')
@@ -573,7 +573,7 @@ Citizen.CreateThread(function()
 		    if onTestBlipp_p ~= nil and DoesBlipExist(onTestBlipp_p) then
 				Citizen.InvokeNative(0x86A652570E5F25DD,Citizen.PointerValueIntInitialized(onTestBlipp_p))
 		    end
-			EndDTest()
+			EndDTest_p()
 		end
 	end	
 	
