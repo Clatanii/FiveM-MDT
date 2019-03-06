@@ -668,7 +668,7 @@ Citizen.CreateThread(function()
 		end
 	end		
 	
-	if DoesEntityExist(veh) == false and onTestEvent >= 1 and onTestEvent <= 16 then
+	if DoesEntityExist(veh) == false and onTestEvent >= 2 and onTestEvent <= 16 then
 		if onTestBlipp ~= nil and DoesBlipExist(onTestBlipp) then
 			Citizen.InvokeNative(0x86A652570E5F25DD,Citizen.PointerValueIntInitialized(onTestBlipp))
 		end
