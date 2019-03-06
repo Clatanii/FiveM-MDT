@@ -461,7 +461,7 @@ Citizen.CreateThread(function()
 		end
 	end	
 	
-	if DoesEntityExist(truck) == false and c_onTestEvent >= 1 and c_onTestEvent <= 3 then
+	if DoesEntityExist(truck) == false and c_onTestEvent >= 2 and c_onTestEvent <= 3 then
 		if c_onTestBlipp ~= nil and DoesBlipExist(c_onTestBlipp) then
 			Citizen.InvokeNative(0x86A652570E5F25DD,Citizen.PointerValueIntInitialized(c_onTestBlipp))
 		end
