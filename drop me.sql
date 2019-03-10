@@ -14,7 +14,8 @@ CREATE TABLE IF NOT EXISTS `chars` (
   `cd_license` tinyint(1) NOT NULL,
   `license_p` int(11) NOT NULL,
   `b_license` tinyint(1) NOT NULL,
-  `f_license` tinyint(1) NOT NULL
+  `f_license` tinyint(1) NOT NULL,
+  PRIMARY KEY (ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -32,7 +33,8 @@ CREATE TABLE IF NOT EXISTS `srr_char_bolos` (
   `STEAMID` varchar(255) NOT NULL,
   `Username` varchar(255) NOT NULL,
   `bolo` varchar(255) NOT NULL,
-  `ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -48,7 +50,8 @@ CREATE TABLE IF NOT EXISTS `srr_char_charges` (
   `Username` varchar(255) NOT NULL,
   `officer_STEAMID` varchar(255) NOT NULL,
   `officer_Username` varchar(255) NOT NULL,
-  `charge` varchar(255) NOT NULL
+  `charge` varchar(255) NOT NULL,
+  PRIMARY KEY (ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -64,7 +67,8 @@ CREATE TABLE IF NOT EXISTS `srr_char_plate` (
   `Username` varchar(255) NOT NULL,
   `plate_number` varchar(255) NOT NULL,
   `veh_name` varchar(255) NOT NULL,
-  `flag_stolen` tinyint(1) NOT NULL
+  `flag_stolen` tinyint(1) NOT NULL,
+  PRIMARY KEY (ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -80,5 +84,6 @@ CREATE TABLE IF NOT EXISTS `srr_char_warrants` (
   `Username` varchar(255) NOT NULL,
   `officer_STEAMID` varchar(255) NOT NULL,
   `officer_Username` varchar(255) NOT NULL,
-  `warrant` varchar(255) NOT NULL
+  `warrant` varchar(255) NOT NULL,
+  PRIMARY KEY (ID)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
