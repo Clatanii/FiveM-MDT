@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `srr_char_plate` (
   `Username` varchar(255) NOT NULL,
   `plate_number` varchar(255) NOT NULL,
   `veh_name` varchar(255) NOT NULL,
-  `flag_stolen` tinyint(1) NOT NULL
+  `flag_stolen` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
