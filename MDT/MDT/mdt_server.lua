@@ -436,9 +436,6 @@ AddEventHandler("MDT_SQL_RESET_D_POINTS", function(VALUE)
 		MDT_SQL_RESET_D_POINTS_END(PLAYER)
 		TriggerClientEvent("SRR_CHAR:s_Notify", PLAYER, "" .. mdt.Server_Color .. "Your license points was successfully reseted by the court house")
 		--
-		local SQL = 'UPDATE srrcore SET BANK = @MONEY WHERE STEAMID = @ID'
-		local PARAM = {ID = source_steamID, MONEY = bank_value - VALUE}
-		MySQL.Async.execute(SQL,PARAM)
 		elseif (#warrant >= 0) then
 			TriggerClientEvent("SRR_CHAR:s_Notify", PLAYER, "~r~You cannot reset your license points while you have active warrant(s)")	
 		end
