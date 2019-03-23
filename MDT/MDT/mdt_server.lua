@@ -31,7 +31,7 @@ RegisterCommand("mdt", function(source, args, rawCommand)
 	--
 	if args[1] == nil then
 		TriggerClientEvent("SRR_CHAR:MDT_CLOSE_ARRAY", source)
-		TriggerClientEvent("SRR_CHAR:HomePage_MDT", source, mdt.Server_Color .. mdt.Server_Name .. " ~w~| MOBILE DATA TERMINAL", "~c~This Mobile Device is owned by the San Andreas Goverment 2018 & 2019 - CC("..mdt.Server_Name..")", "", "" .. mdt.Server_Color .. "ISSUES & BUGS:", "~c~For any issues or/and bugs with the MDT system, create an report on forums", "", "" .. mdt.Server_Color .. "MDT COMMANDS & CONTROLS:", "~c~All the following commands are to be used after /mdt", "~w~warcheck (ID), chacheck (ID), placheck (PLATE), bolcheck, idcheck (ID), addp (ID) (POINTS)", "~w~addwar (ID) (WARRENT), addcha (ID) (CHARGE), flag stolen (PLATE) (0/1), addbolo (BOLO)", "~w~clearwar (ID) (WARRENT), clearcha (ID) (CHARGE), delplate (PLATE), clearbol", "", "" .. mdt.Server_Color .. "STATUS & PERSONAL MDT INFO:", "~c~Your status and personal info and/or notes. [/mdt addnote (NOTE)] to add a note.", "~w~PERSONAL NOTE: ~c~", "~w~MDT VERSION: ~c~", "~w~MDT NETWORK STATUS: ~g~")
+		TriggerClientEvent("SRR_CHAR:HomePage_MDT", source, mdt.Server_Color .. mdt.Server_Name .. " ~w~| MOBILE DATA TERMINAL", "~c~This Mobile Device is owned by the San Andreas Goverment 2019 & 2020 - CC("..mdt.Server_Name..")", "", "" .. mdt.Server_Color .. "ISSUES & BUGS:", "~c~For any issues or/and bugs with the MDT system, create an report on forums", "", "" .. mdt.Server_Color .. "MDT COMMANDS & CONTROLS:", "~c~All the following commands are to be used after /mdt", "~w~warcheck (ID), chacheck (ID), placheck (PLATE), bolcheck, idcheck (ID), addp (ID) (POINTS)", "~w~addwar (ID) (WARRENT), addcha (ID) (CHARGE), flag stolen (PLATE) (0/1), addbolo (BOLO)", "~w~clearwar (ID) (WARRENT), clearcha (ID) (CHARGE), delplate (PLATE), clearbol", "", "" .. mdt.Server_Color .. "STATUS & PERSONAL MDT INFO:", "~c~Your status and personal info and/or notes. [/mdt addnote (NOTE)] to add a note.", "~w~PERSONAL NOTE: ~c~", "~w~MDT VERSION: ~c~", "~w~MDT NETWORK STATUS: ~g~")
 	end
 	--
 	-- (MAIN PART)
@@ -54,11 +54,15 @@ RegisterCommand("mdt", function(source, args, rawCommand)
 	--
 	-- (LICENSE POINTS PART)
 	--
-	if args[1] == "addp" then
-		if args[3] > mdt.Server_Points then
-			TriggerClientEvent('chatMessage', PLAYER, "^1[CMD_INP_ERR] Exceeded max value for [Points] - [Max: "..mdt.Server_Points.."]", {255, 255, 255})
+	if args[1] == "addp" and args[2] and args[3] then
+		if GetPlayerName(args[2]) == nil then
+			TriggerClientEvent('chatMessage', PLAYER, "^1[CMD_LOD_ERR] -[D]- {ID LOAD ERROR} -[S]- {INPUT A VALID ID}")
 		else
-			TriggerClientEvent("MDT_SKIP_EVENT:POINT_ADD", PLAYER, args[2], args[3])
+			if args[3] > mdt.Server_Points then
+				TriggerClientEvent('chatMessage', PLAYER, "^1[CMD_INP_ERR] -[D]- {EXCEEDED VALUE: POINTS} -[S]- {MAX: "..mdt.Server_Points.."}", {255, 255, 255})
+			else
+				TriggerClientEvent("MDT_SKIP_EVENT:POINT_ADD", PLAYER, args[2], args[3])
+			end
 		end
 	end
 	--
@@ -86,7 +90,10 @@ RegisterCommand("mdt", function(source, args, rawCommand)
 	--
 	-- (WARRANT PART)
 	--
-	if args[1] == "addwar" and GetPlayerName(args[2]) and args[3] then
+	if args[1] == "addwar" and args[2] and args[3] then
+		if GetPlayerName(args[2]) == nil then
+			TriggerClientEvent('chatMessage', PLAYER, "^1[CMD_LOD_ERR] -[D]- {ID LOAD ERROR} -[S]- {INPUT A VALID ID}")
+		else
 		local str = "";
 				for i = 3, #args do
 					if (str == "") then
@@ -96,42 +103,67 @@ RegisterCommand("mdt", function(source, args, rawCommand)
 					end
 				end
 		TriggerClientEvent("MDT_SKIP_EVENT:WAR_ADD", PLAYER, args[2], str) --
+		end
 	end
 	--
-	if args[1] == "clearwar" and args[2] and (GetPlayerName(args[2])) then
-		TriggerClientEvent("MDT_SKIP_EVENT:WAR_CLEAR", PLAYER, args[2]) --
+	if args[1] == "clearwar" and args[2] then
+		if GetPlayerName(args[2]) == nil then
+			TriggerClientEvent('chatMessage', PLAYER, "^1[CMD_LOD_ERR] -[D]- {ID LOAD ERROR} -[S]- {INPUT A VALID ID}")
+		else
+			TriggerClientEvent("MDT_SKIP_EVENT:WAR_CLEAR", PLAYER, args[2]) --
+		end
 	end
 	--
-	if args[1] == "warcheck" then
-		TriggerClientEvent("MDT_SKIP_EVENT:WAR_CHECK", PLAYER, args[2]) --
+	if args[1] == "warcheck" and args[2] then
+		if GetPlayerName(args[2]) == nil then
+			TriggerClientEvent('chatMessage', PLAYER, "^1[CMD_LOD_ERR] -[D]- {ID LOAD ERROR} -[S]- {INPUT A VALID ID}")
+		else
+			TriggerClientEvent("MDT_SKIP_EVENT:WAR_CHECK", PLAYER, args[2]) --
+		end
 	end
 	--
 	-- (CHARGES PART)
 	--
-	if args[1] == "addcha" and GetPlayerName(args[2]) and args[3] then
-		local str = "";
-				for i = 3, #args do
-					if (str == "") then
-						str = args[i];
-					else
-						str = str .. " " .. args[i];
-					end
+	if args[1] == "addcha" and args[2] and args[3] then
+		if GetPlayerName(args[2]) == nil then
+			TriggerClientEvent('chatMessage', PLAYER, "^1[CMD_LOD_ERR] -[D]- {ID LOAD ERROR} -[S]- {INPUT A VALID ID}")
+		else
+			local str = "";
+			for i = 3, #args do
+				if (str == "") then
+					str = args[i];
+				else
+					str = str .. " " .. args[i];
 				end
-		TriggerClientEvent("MDT_SKIP_EVENT:CHA_ADD", PLAYER, args[2], str) --
+			end
+			TriggerClientEvent("MDT_SKIP_EVENT:CHA_ADD", PLAYER, args[2], str) --
+		end
 	end
 	--
-	if args[1] == "clearcha" and args[2] and (GetPlayerName(args[2])) then
-		TriggerClientEvent("MDT_SKIP_EVENT:CHA_REM", PLAYER, args[2]) --
+	if args[1] == "clearcha" and args[2] then
+		if GetPlayerName(args[2]) == nil then
+			TriggerClientEvent('chatMessage', PLAYER, "^1[CMD_LOD_ERR] -[D]- {ID LOAD ERROR} -[S]- {INPUT A VALID ID}")
+		else
+			TriggerClientEvent("MDT_SKIP_EVENT:CHA_REM", PLAYER, args[2]) --
+		end
 	end
 	--
-	if args[1] == "chacheck" then
-		TriggerClientEvent("MDT_SKIP_EVENT:CHA_CHECK", PLAYER, args[2]) --
+	if args[1] == "chacheck"  and args[2] then
+		if GetPlayerName(args[2]) == nil then
+			TriggerClientEvent('chatMessage', PLAYER, "^1[CMD_LOD_ERR] -[D]- {ID LOAD ERROR} -[S]- {INPUT A VALID ID}")
+		else
+			TriggerClientEvent("MDT_SKIP_EVENT:CHA_CHECK", PLAYER, args[2]) --
+		end
 	end
 	--
 	-- (CHARACTER PART)
 	--
-	if args[1] == "idcheck" then
-		TriggerClientEvent("MDT_SKIP_EVENT:ID_CHECK", PLAYER, args[2]) --
+	if args[1] == "idcheck" and args[2] then
+		if GetPlayerName(args[2]) == nil then
+			TriggerClientEvent('chatMessage', PLAYER, "^1[CMD_LOD_ERR] -[D]- {ID LOAD ERROR} -[S]- {INPUT A VALID ID}")
+		else
+			TriggerClientEvent("MDT_SKIP_EVENT:ID_CHECK", PLAYER, args[2]) --
+		end
 	end
 	--
 	-- (VEHICLE REG)
@@ -287,19 +319,6 @@ end)
 ---------------------------
 -- */* MDT - WARRANT */* --
 ---------------------------
-
--- Add warrant to MDT-System
-RegisterServerEvent("MDT_SKIP_EVENT:WAR_ADD_2")
-AddEventHandler('MDT_SKIP_EVENT:WAR_ADD_2', function(player, warrant)
-	local source_steamID = GetSteamID(source)
-	local player_steamID = GetSteamID(player)
-	local PLAYER = source
-	--
-	MySQL.Async.execute("INSERT INTO srr_char_warrants (`ts`, `STEAMID`, `Username`, `officer_STEAMID`, `officer_Username`, `warrant_a`) VALUES (NOW(), @STEAMID, @Username, @officer_STEAMID, @officer_Username, @warrant_a);",
-		{["@STEAMID"] = player_steamID, ["@Username"] = GetPlayerName(player), ["@officer_STEAMID"] = source_steamID, ['@officer_Username'] = GetPlayerName(source), ['@warrant_a'] = warrant}, function()
-		TriggerClientEvent("SRR_CHAR:s_Notify", PLAYER, "" .. mdt.Server_Color .. "MDT~w~: Warrant was put out successfully")
-	end);
-end)
 
 -- Add warrant to MDT-System
 RegisterServerEvent("MDT_SKIP_EVENT:WAR_ADD_2")

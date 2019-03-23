@@ -207,7 +207,7 @@ Citizen.CreateThread(function()
 		-- MDT display [BOLOS]
 		if (#mdt_bolos > 0) then
 			drawTxt(1.043, 0.675, 1.0,1.0,1.1, mdt.Server_Color .. mdt.Server_Name .. " ~w~| MOBILE DATA TERMINAL", 255, 255, 255, 200)
-			drawTxt(1.043, 0.730, 1.0,1.0,0.48, "~c~This Mobile Device is owned by the San Andreas Goverment 2018 & 2019 - CC("..mdt.Server_Name..")", 255, 255, 255, 200)
+			drawTxt(1.043, 0.730, 1.0,1.0,0.48, "~c~This Mobile Device is owned by the San Andreas Goverment 2019 & 2020 - CC("..mdt.Server_Name..")", 255, 255, 255, 200)
 			drawTxt(1.043, 0.780, 1.0,1.0,0.48, "" .. mdt.Server_Color .. "ACTIVE BOLOS:", 255, 255, 255, 200)
 			DrawRect((float(1080 + xoffs)/1.5)/resx, (float(524)/1.5)/resy, (float(800)/1.5)/resx, (float(650)/1.5)/resy, 0, 0, 0, 200);
 			for i = 1, #mdt_bolos do
@@ -226,7 +226,7 @@ Citizen.CreateThread(function()
 		-- MDT display [WARRANTS]
 		if (#mdt_warrents > 0) then
 			drawTxt(1.043, 0.675, 1.0,1.0,1.1, mdt.Server_Color .. mdt.Server_Name .. " ~w~| MOBILE DATA TERMINAL", 255, 255, 255, 200)
-			drawTxt(1.043, 0.730, 1.0,1.0,0.48, "~c~This Mobile Device is owned by the San Andreas Goverment 2018 & 2019 - CC("..mdt.Server_Name..")", 255, 255, 255, 200)
+			drawTxt(1.043, 0.730, 1.0,1.0,0.48, "~c~This Mobile Device is owned by the San Andreas Goverment 2019 & 2020 - CC("..mdt.Server_Name..")", 255, 255, 255, 200)
 			drawTxt(1.043, 0.780, 1.0,1.0,0.48, "" .. mdt.Server_Color .. "ACTIVE ARREST WARRANTS:", 255, 255, 255, 200)
 			DrawRect((float(1080 + xoffs)/1.5)/resx, (float(524)/1.5)/resy, (float(800)/1.5)/resx, (float(650)/1.5)/resy, 0, 0, 0, 200);
 			for i = 1, #mdt_warrents do
@@ -246,7 +246,7 @@ Citizen.CreateThread(function()
 		-- MDT display [CHARGES]
 		if (#mdt_charges > 0) then
 			drawTxt(1.043, 0.675, 1.0,1.0,1.1, mdt.Server_Color .. mdt.Server_Name .. " ~w~| MOBILE DATA TERMINAL", 255, 255, 255, 200)
-			drawTxt(1.043, 0.730, 1.0,1.0,0.48, "~c~This Mobile Device is owned by the San Andreas Goverment 2018 & 2019 - CC("..mdt.Server_Name..")", 255, 255, 255, 200)
+			drawTxt(1.043, 0.730, 1.0,1.0,0.48, "~c~This Mobile Device is owned by the San Andreas Goverment 2019 & 2020 - CC("..mdt.Server_Name..")", 255, 255, 255, 200)
 			drawTxt(1.043, 0.780, 1.0,1.0,0.48, "" .. mdt.Server_Color .. "PREV CHARGES:", 255, 255, 255, 200)
 			DrawRect((float(1080 + xoffs)/1.5)/resx, (float(524)/1.5)/resy, (float(800)/1.5)/resx, (float(650)/1.5)/resy, 0, 0, 0, 200);
 			for i = 1, #mdt_charges do
@@ -265,7 +265,7 @@ Citizen.CreateThread(function()
 		-- MDT display [ID]
 		if (#mdt_id > 0) then
 			drawTxt(1.043, 0.675, 1.0,1.0,1.1, mdt.Server_Color .. mdt.Server_Name .. " ~w~| MOBILE DATA TERMINAL", 255, 255, 255, 200)
-			drawTxt(1.043, 0.730, 1.0,1.0,0.48, "~c~This Mobile Device is owned by the San Andreas Goverment 2018 & 2019 - CC("..mdt.Server_Name..")", 255, 255, 255, 200)
+			drawTxt(1.043, 0.730, 1.0,1.0,0.48, "~c~This Mobile Device is owned by the San Andreas Goverment 2019 & 2020 - CC("..mdt.Server_Name..")", 255, 255, 255, 200)
 			DrawRect((float(1080 + xoffs)/1.5)/resx, (float(524)/1.5)/resy, (float(800)/1.5)/resx, (float(650)/1.5)/resy, 0, 0, 0, 200);
 			for i = 1, #mdt_id do
 				drawTxt(1.043, 0.780, 1.0,1.0,0.48, "" .. mdt.Server_Color .. "ID INFORMATION:", 255, 255, 255, 200)
@@ -305,7 +305,7 @@ Citizen.CreateThread(function()
 		-- MDT display [PLATE(S)]
 		if (#mdt_plate > 0) then
 			drawTxt(1.043, 0.675, 1.0,1.0,1.1, mdt.Server_Color .. mdt.Server_Name .. " ~w~| MOBILE DATA TERMINAL", 255, 255, 255, 200)
-			drawTxt(1.043, 0.730, 1.0,1.0,0.48, "~c~This Mobile Device is owned by the San Andreas Goverment 2018 & 2019 - CC("..mdt.Server_Name..")", 255, 255, 255, 200)
+			drawTxt(1.043, 0.730, 1.0,1.0,0.48, "~c~This Mobile Device is owned by the San Andreas Goverment 2019 & 2020 - CC("..mdt.Server_Name..")", 255, 255, 255, 200)
 			DrawRect((float(1080 + xoffs)/1.5)/resx, (float(524)/1.5)/resy, (float(800)/1.5)/resx, (float(650)/1.5)/resy, 0, 0, 0, 200);
 			for i = 1, #mdt_plate do
 				drawTxt(1.043, 0.780, 1.0,1.0,0.48, "" .. mdt.Server_Color .. "PLATE HISTORY:", 255, 255, 255, 200)
