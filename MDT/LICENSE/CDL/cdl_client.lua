@@ -3,7 +3,6 @@
 ----------------------------------------------
 
 -- Alpha Email: clatani123123@gmail.com
--- SRR Email: statewiderealisticrp@gmail.com
 -- Alpha Discord: Alpha#5199
 
 ----------------------------------------------
@@ -487,11 +486,4 @@ end)
 -- Get current vehicle ped is in function
 function GetCar() 
 	return GetVehiclePedIsIn(GetPlayerPed(-1),false) 
-end
-
--- Display Help text function
-function DisplayHelpText(str)
-	SetTextComponentFormat("STRING")
-	AddTextComponentString(str)
-	DisplayHelpTextFromStringLabel(0, 0, 1, -1)
 end

@@ -3,7 +3,6 @@
 ----------------------------------------------
 
 -- Alpha Email: clatani123123@gmail.com
--- SRR Email: statewiderealisticrp@gmail.com
 -- Alpha Discord: Alpha#5199
 
 ----------------------------------------------
@@ -640,50 +639,7 @@ end
 --- */* SCRIPT BASE FUNCTIONS */* ---
 -------------------------------------
 
--- Draw mission text function
-function DrawMissionText2(m_text, showtime)
-    ClearPrints()
-	SetTextEntry_2("STRING")
-	AddTextComponentString(m_text)
-	DrawSubtitleTimed(showtime, 1)
-end
-
 -- Get current vehicle ped is in function
 function GetCar() 
 	return GetVehiclePedIsIn(GetPlayerPed(-1),false) 
-end
-
--- Draw text function
-function drawTxt(x,y ,width,height,scale, text, r,g,b,a)
-	SetTextFont(4)
-	SetTextProportional(0)
-	SetTextScale(scale, scale)
-	SetTextColour(r, g, b, a)
-	SetTextDropShadow(0, 0, 0, 0,255)
-	SetTextEdge(2, 0, 0, 0, 255)
-	SetTextDropShadow()
-	SetTextOutline()
-	SetTextEntry("STRING")
-	AddTextComponentString(text)
-	DrawText(x - width/2, y - height/2 + 0.005)
-end
-
--- Display Help text function
-function DisplayHelpText(str)
-	SetTextComponentFormat("STRING")
-	AddTextComponentString(str)
-	DisplayHelpTextFromStringLabel(0, 0, 1, -1)
-end
-
--- Get float [for window template(s)] function
-function float(number)
-    number = number + 0.00001
-    return number
-end
-
--- Draw notification function
-function drawNotification(text)
-	SetNotificationTextEntry("STRING")
-	AddTextComponentString(text)
-	DrawNotification(true, true)
 end

@@ -3,7 +3,6 @@
 ----------------------------------------------
 
 -- Alpha Email: clatani123123@gmail.com
--- SRR Email: statewiderealisticrp@gmail.com
 -- Alpha Discord: Alpha#5199
 
 ----------------------------------------------

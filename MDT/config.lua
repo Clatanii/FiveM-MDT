@@ -23,7 +23,7 @@
 -- */* OFFICIAL SERVER USED CONFIG {CLIENT & SERVER} */*
 mdt = {
 	-- */* CURRENT VERSION */*
-	Script_Ver = "1.4",
+	Script_Ver = "1.5",
 	-- */* SERVER NAME */*
 	Server_Name = 'FIVEM', -- (Recommend using first initials of server name, to make it look better and fit inside box)
 	-- */* MAIN COLOR FOR THINGS */* 

@@ -3,7 +3,6 @@
 ----------------------------------------------
 
 -- Alpha Email: clatani123123@gmail.com
--- SRR Email: statewiderealisticrp@gmail.com
 -- Alpha Discord: Alpha#5199
 
 ----------------------------------------------
@@ -18,10 +17,6 @@
 
 -- */* WINDOW BOOL */*
 showmyinfo = false
-
--- */* Character RP info */*
-CHAR_BAC_LEVEL = 0.0
-CHAR_DRUG_LEVEL = 0.0
 
 -----------------------------
 --- */* SCRIPT EVENTS */* ---
@@ -93,42 +88,7 @@ function ShowMDTblackbox(menu, desc1, desc2, desc3, line1, line2, line3, line4, 
 			drawTxt(1.043, 1.180, 1.0,1.0,0.48, line16, 255, 255, 255, 200)
 			drawTxt(1.043, 1.205, 1.0,1.0,0.48, line17, 255, 255, 255, 200)
 			drawTxt(1.387, 1.253, 1.0,1.0,0.40, line18, 255, 255, 255, 200)
-			drawTxt(1.192, 1.245, 1.0,1.0,0.45, "~c~P R E S S  ~c~D E L  ~c~T O  C L O S E", 255, 255, 255, 200);
+			drawTxt(1.192, 1.245, 1.0,1.0,0.45, "~c~P R E S S  "..mdt.Server_Color.."D E L  ~c~T O  C L O S E", 255, 255, 255, 200);
 		end
 	end)
-end
-
--------------------------------------
---- */* SCRIPT BASE FUNCTIONS */* ---
--------------------------------------
-
-function drawTxt(x,y ,width,height,scale, text, r,g,b,a)
-	SetTextFont(4)
-	SetTextProportional(0)
-	SetTextScale(scale, scale)
-	SetTextColour(r, g, b, a)
-	SetTextDropShadow(0, 0, 0, 0,255)
-	SetTextEdge(2, 0, 0, 0, 255)
-	SetTextDropShadow()
-	SetTextOutline()
-	SetTextEntry("STRING")
-	AddTextComponentString(text)
-	DrawText(x - width/2, y - height/2 + 0.005)
-end
-
-function DisplayHelpText(str)
-	SetTextComponentFormat("STRING")
-	AddTextComponentString(str)
-	DisplayHelpTextFromStringLabel(0, 0, 1, -1)
-end
-
-function float(number)
-    number = number + 0.00001
-    return number
-end
-
-function drawNotification(text)
-	SetNotificationTextEntry("STRING")
-	AddTextComponentString(text)
-	DrawNotification(true, true)
 end

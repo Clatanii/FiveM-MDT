@@ -3,7 +3,6 @@
 ----------------------------------------------
 
 -- Alpha Email: clatani123123@gmail.com
--- SRR Email: statewiderealisticrp@gmail.com
 -- Alpha Discord: Alpha#5199
 
 ----------------------------------------------
@@ -213,7 +212,7 @@ Citizen.CreateThread(function()
 			for i = 1, #mdt_bolos do
 				drawTxt(1.043, 0.780 + i*0.021, 1.0,1.0,0.48, "[" .. mdt_bolos[i].ts .. "] " .. mdt_bolos[i].bolo .. " ~c~(by " .. mdt_bolos[i].Username .. ")~w~", 255, 255, 255, 200);
 				if (i == #mdt_bolos) then
-					drawTxt(1.192, 1.245, 1.0,1.0,0.45, "~c~P R E S S  ~c~D E L  ~c~T O  C L O S E", 255, 255, 255, 200)
+					drawTxt(1.192, 1.245, 1.0,1.0,0.45, "~c~P R E S S  "..mdt.Server_Color.."D E L  ~c~T O  C L O S E", 255, 255, 255, 200)
 				end
 			end
 			if (IsControlJustPressed(0, 178)) then
@@ -232,7 +231,7 @@ Citizen.CreateThread(function()
 			for i = 1, #mdt_warrents do
 				drawTxt(1.043, 0.780 + i*0.021, 1.0,1.0,0.48, "[" .. mdt_warrents[i].ts .. "] " .. mdt_warrents[i].warrant .. " ~c~(by " .. mdt_warrents[i].officer_Username .. ")", 255, 255, 255, 200);
 				if (i == #mdt_warrents) then
-					drawTxt(1.192, 1.245, 1.0,1.0,0.45, "~c~P R E S S  ~c~D E L  ~c~T O  C L O S E", 255, 255, 255, 200);
+					drawTxt(1.192, 1.245, 1.0,1.0,0.45, "~c~P R E S S  "..mdt.Server_Color.."D E L  ~c~T O  C L O S E", 255, 255, 255, 200);
 				end
 			end
 			if (IsControlJustPressed(0, 178)) then
@@ -252,7 +251,7 @@ Citizen.CreateThread(function()
 			for i = 1, #mdt_charges do
 				drawTxt(1.043, 0.780 + i*0.021, 1.0,1.0,0.48, "[" .. mdt_charges[i].ts .. "] " .. mdt_charges[i].charge .. " ~c~(by " .. mdt_charges[i].officer_Username .. ")", 255, 255, 255, 200);
 				if (i == #mdt_charges) then
-					drawTxt(1.192, 1.245, 1.0,1.0,0.45, "~c~P R E S S  ~c~D E L  ~c~T O  C L O S E", 255, 255, 255, 200);
+					drawTxt(1.192, 1.245, 1.0,1.0,0.45, "~c~P R E S S  "..mdt.Server_Color.."D E L  ~c~T O  C L O S E", 255, 255, 255, 200);
 				end
 			end
 			if (IsControlJustPressed(0, 178)) then
@@ -292,7 +291,7 @@ Citizen.CreateThread(function()
 				end
 				--
 				if (i == #mdt_id) then
-					drawTxt(1.192, 1.245, 1.0,1.0,0.45, "~c~P R E S S  ~c~D E L  ~c~T O  C L O S E", 255, 255, 255, 200);
+					drawTxt(1.192, 1.245, 1.0,1.0,0.45, "~c~P R E S S  "..mdt.Server_Color.."D E L  ~c~T O  C L O S E", 255, 255, 255, 200);
 				end
 			end
 			if (IsControlJustPressed(0, 178)) then
@@ -312,7 +311,7 @@ Citizen.CreateThread(function()
 				drawTxt(1.043, 0.780 + i*0.021, 1.0,1.0,0.48, "~w~[~c~" .. mdt_plate[i].plate_number .. "~w~] ~c~- ~w~(~c~".. mdt_plate[i].veh_name .."~w~) ~c~- ~w~[~c~Stolen: ".. tostring(mdt_plate[i].flag_stolen) .."~w~) ~c~- ~w~[".. mdt_plate[i].Username .. "]", 255, 255, 255, 200);
 				drawTxt(1.043, 0.780 + i*0.042, 1.0,1.0,0.48, "  ~w~[~w~Full name: ~c~"..mdt_chari[i].Firstname.." ~w~/ ~c~"..mdt_chari[i].Lastname.."~w~] ~c~- ~w~[DOB: ~c~"..mdt_chari[i].DOB.."~w~]", 255, 255, 255, 200);
 				if (i == #mdt_plate) then
-					drawTxt(1.192, 1.245, 1.0,1.0,0.45, "~c~P R E S S  ~c~D E L  ~c~T O  C L O S E", 255, 255, 255, 200);
+					drawTxt(1.192, 1.245, 1.0,1.0,0.45, "~c~P R E S S  "..mdt.Server_Color.."D E L  ~c~T O  C L O S E", 255, 255, 255, 200);
 				end
 			end
 			if (IsControlJustPressed(0, 178)) then
@@ -332,7 +331,7 @@ Citizen.CreateThread(function()
 				drawTxt(1.043, 0.780, 1.0,1.0,0.48, "" .. mdt.Server_Color .. "CURRENT REGISTERED VEHICLES:", 255, 255, 255, 200)
 				drawTxt(1.043, 0.780 + i*0.021, 1.0,1.0,0.48, "~w~[~c~" .. veh_plate[i].plate_number .. "~w~] ~c~- ~w~(~c~".. veh_plate[i].veh_name .."~w~) ~c~- ~w~[~c~Stolen: ".. tostring(veh_plate[i].flag_stolen) .."~w~)", 255, 255, 255, 200);
 				if (i == #veh_plate) then
-					drawTxt(1.192, 1.245, 1.0,1.0,0.45, "~c~P R E S S  ~c~D E L  ~c~T O  C L O S E", 255, 255, 255, 200);
+					drawTxt(1.192, 1.245, 1.0,1.0,0.45, "~c~P R E S S  "..mdt.Server_Color.."D E L  ~c~T O  C L O S E", 255, 255, 255, 200);
 				end
 			end
 			if (IsControlJustPressed(0, 178)) then
@@ -378,7 +377,7 @@ function ShowMDTblackbox_MDT_MAIN(menu, desc1, desc2, desc3, line1, line2, line3
 			drawTxt(1.043, 1.155, 1.0,1.0,0.48, line15, 255, 255, 255, 200)
 			drawTxt(1.043, 1.180, 1.0,1.0,0.48, line16, 255, 255, 255, 200)
 			drawTxt(1.387, 1.253, 1.0,1.0,0.40, line18, 255, 255, 255, 200)
-			drawTxt(1.192, 1.245, 1.0,1.0,0.45, "~c~P R E S S  ~c~D E L  ~c~T O  C L O S E", 255, 255, 255, 200)
+			drawTxt(1.192, 1.245, 1.0,1.0,0.45, "~c~P R E S S  "..mdt.Server_Color.."D E L  ~c~T O  C L O S E", 255, 255, 255, 200)
 		end
 	end)
 end
@@ -412,7 +411,7 @@ function ShowMDTblackbox_MDT_OTHER(menu, desc1, desc2, desc3, line1, line2, line
 			drawTxt(1.043, 1.155, 1.0,1.0,0.48, line15, 255, 255, 255, 200)
 			drawTxt(1.043, 1.180, 1.0,1.0,0.48, line16, 255, 255, 255, 200)
 			drawTxt(1.387, 1.253, 1.0,1.0,0.40, line18, 255, 255, 255, 200)
-			drawTxt(1.192, 1.245, 1.0,1.0,0.45, "~c~P R E S S  ~c~D E L  ~c~T O  C L O S E", 255, 255, 255, 200);
+			drawTxt(1.192, 1.245, 1.0,1.0,0.45, "~c~P R E S S  "..mdt.Server_Color.."D E L  ~c~T O  C L O S E", 255, 255, 255, 200);
 		end
 	end)
 end
@@ -619,6 +618,14 @@ function drawTxt(x,y ,width,height,scale, text, r,g,b,a)
 	DrawText(x - width/2, y - height/2 + 0.005)
 end
 
+-- Draw mission text function
+function DrawMissionText2(m_text, showtime)
+    ClearPrints()
+	SetTextEntry_2("STRING")
+	AddTextComponentString(m_text)
+	DrawSubtitleTimed(showtime, 1)
+end
+
 function drawNotification(text)
 	SetNotificationTextEntry("STRING")
 	AddTextComponentString(text)
@@ -635,7 +642,7 @@ function DrawTextOnScreen(x,y,z, text)
     local px,py,pz=table.unpack(GetGameplayCamCoords())
     
     SetTextScale(0.35, 0.35)
-    SetTextFont(4)
+    SetTextFont(0)
     SetTextProportional(1)
     SetTextColour(255, 255, 255, 215)
     SetTextEntry("STRING")
@@ -647,7 +654,7 @@ function DrawTextOnScreen(x,y,z, text)
 end
 
 -- Template for 25 meters message
-line18 = "        ~m~FiveM Network"
+line18 = ""
 RegisterNetEvent('sendProximityMessage25Command')
 AddEventHandler('sendProximityMessage25Command', function(id, msg)
   local myId = PlayerId()

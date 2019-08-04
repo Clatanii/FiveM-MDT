@@ -3,7 +3,6 @@
 ----------------------------------------------
 
 -- Alpha Email: clatani123123@gmail.com
--- SRR Email: statewiderealisticrp@gmail.com
 -- Alpha Discord: Alpha#5199
 
 ----------------------------------------------
@@ -88,15 +87,3 @@ function ShowBoxMain(head, text1, text2, text3, text4, text5, text6, text7, text
     end
   end)
 end
-
-
--- Display Help text function
-function DisplayHelpText(str)
-	SetTextComponentFormat("STRING")
-	AddTextComponentString(str)
-	DisplayHelpTextFromStringLabel(0, 0, 1, -1)
-end
-
----------------------------------
---- */* SCRIPT BASE LOOPS */* ---
----------------------------------
