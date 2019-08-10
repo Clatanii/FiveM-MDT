@@ -612,10 +612,17 @@ function drawTxt(x,y ,width,height,scale, text, r,g,b,a)
 	SetTextDropShadow(0, 0, 0, 0,255)
 	SetTextEdge(2, 0, 0, 0, 255)
 	SetTextDropShadow()
-	SetTextOutline()
+	--SetTextOutline()
 	SetTextEntry("STRING")
 	AddTextComponentString(text)
 	DrawText(x - width/2, y - height/2 + 0.005)
+end
+
+-- Help text in left upper corner
+function DisplayHelpText(str)
+	SetTextComponentFormat("STRING")
+	AddTextComponentString(str)
+	DisplayHelpTextFromStringLabel(0, 0, 1, -1)
 end
 
 -- Draw mission text function
